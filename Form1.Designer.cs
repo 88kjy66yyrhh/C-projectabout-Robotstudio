@@ -34,7 +34,7 @@ namespace WinFormsControlLibrary2
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            ListViewItem listViewItem1 = new ListViewItem(new string[] { "" }, -1, Color.Empty, SystemColors.Info, null);
+            ListViewItem listViewItem2 = new ListViewItem(new string[] { "" }, -1, Color.Empty, SystemColors.Info, null);
             listView1 = new ListView();
             columnHeader7 = new ColumnHeader();
             columnHeader8 = new ColumnHeader();
@@ -720,8 +720,8 @@ namespace WinFormsControlLibrary2
             // listView3
             // 
             listView3.Columns.AddRange(new ColumnHeader[] { columnHeader11, columnHeader12, columnHeader13, columnHeader14 });
-            listViewItem1.StateImageIndex = 0;
-            listView3.Items.AddRange(new ListViewItem[] { listViewItem1 });
+            listViewItem2.StateImageIndex = 0;
+            listView3.Items.AddRange(new ListViewItem[] { listViewItem2 });
             listView3.Location = new Point(1285, 169);
             listView3.Name = "listView3";
             listView3.Size = new Size(566, 788);
@@ -1044,6 +1044,8 @@ namespace WinFormsControlLibrary2
             radioButton_User.TabIndex = 17;
             radioButton_User.Text = "用户坐标系";
             radioButton_User.UseVisualStyleBackColor = true;
+            radioButton_User.Visible = false;
+            radioButton_User.CheckedChanged += radioButton_User_CheckedChanged;
             radioButton_User.Click += RadioButton_Text_Appear;
             // 
             // radioButton_WorkProject
@@ -1068,6 +1070,7 @@ namespace WinFormsControlLibrary2
             radioButton_Tool.TabIndex = 15;
             radioButton_Tool.Text = "工具坐标系";
             radioButton_Tool.UseVisualStyleBackColor = true;
+            radioButton_Tool.Visible = false;
             radioButton_Tool.Click += RadioButton_Text_Appear;
             // 
             // radioButton_Base
@@ -1479,6 +1482,7 @@ namespace WinFormsControlLibrary2
             comboBox_Save.Name = "comboBox_Save";
             comboBox_Save.Size = new Size(182, 32);
             comboBox_Save.TabIndex = 5;
+            comboBox_Save.SelectedIndexChanged += comboBox_Save_SelectedIndexChanged;
             comboBox_Save.Click += comboBox_Save_Click;
             // 
             // comboBox_jiazai

@@ -867,12 +867,13 @@ namespace WinFormsControlLibrary2
                 string RemoteDir = controller.FileSystem.RemoteDirectory;
                 if (controller.FileSystem.FileExists("/" + strFileName))
                 {
-                    controller.FileSystem.PutFile(strFileFullPath, RemoteDir + "/" + strFileName, true);
+                    controller.FileSystem.PutFile(strFileFullPath, "\\" + strFileName, true);
                     MessageBox.Show("替换" + strFileName + "到HOME/test/成功");
                 }
                 else
                 {
-                    controller.FileSystem.PutFile(strFileFullPath, RemoteDir + "/" + strFileName, false);
+
+                    controller.FileSystem.PutFile(strFileFullPath, "\\" + strFileName, false);
                     MessageBox.Show("复制" + strFileName + "到HOME/test/成功");
                 }
             }
@@ -996,7 +997,7 @@ namespace WinFormsControlLibrary2
         private void comboBox_pgf_Click(object sender, EventArgs e)
         {
             string RemoteDir = controller.FileSystem.RemoteDirectory;
-            ControllerFileSystemInfo[] controllerFileSystemInfo = controller.FileSystem.GetFilesAndDirectories(RemoteDir);
+            ControllerFileSystemInfo[] controllerFileSystemInfo = controller.FileSystem.GetFilesAndDirectories("//");
             comboBox_pgf.Items.Clear();
             foreach (ControllerFileSystemInfo info in controllerFileSystemInfo)
             {
@@ -1046,7 +1047,8 @@ namespace WinFormsControlLibrary2
         {
 
         }
-        private void Send_Exercise_num(string join, string l, string num1, string num2)
+        //长按的函数
+        private void Send_Exercise_num_Add(string join, string l, string num1, string num2, long lin1, long lin2)
         {
             try
             {
@@ -1057,7 +1059,7 @@ namespace WinFormsControlLibrary2
 
 
                         RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", join);
-                        if ((float.Parse(textBox4.Text) + 5) < 165)
+                        if (num1 == "0")
                         {
                             if (rapidData.RapidType == "num")
                             {
@@ -1069,14 +1071,29 @@ namespace WinFormsControlLibrary2
                         }
                         else
                         {
-                            MessageBox.Show("关节角度超出范围");
+
+                            if ((float.Parse(textBox4.Text) + 1) < lin1)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2(num1);
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
                         }
+
 
                     }
                     else if (radioButton_world.Checked)
                     {
                         RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", l);
-                        if ((float.Parse(textBox4.Text) + 5) < 570)
+                        if (num2 == "0")
                         {
                             if (rapidData.RapidType == "num")
                             {
@@ -1088,21 +1105,25 @@ namespace WinFormsControlLibrary2
                         }
                         else
                         {
-                            MessageBox.Show("关节角度超出范围");
+                            if ((float.Parse(textBox4.Text) + 1) < lin2)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2(num2);
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
+
                         }
+
                     }
-                    //else if (radioButton_Tool.Checked)
-                    //{
-                    //    RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", cir);
 
-
-                    //        if (rapidData.RapidType == "num")
-                    //        {
-                    //            Num rd = new Num();
-                    //            rd.FillFromString2(num3);
-                    //            rapidData.Value = rd;
-                    //        }
-                    // }
                 }
 
 
@@ -1114,72 +1135,158 @@ namespace WinFormsControlLibrary2
                 MessageBox.Show(ex.Message.ToString());
             }
         }
+        private void Send_Exercise_num_Sub(string join, string l, string num1, string num2, long lin1, long lin2)
+        {
+            try
+            {
+                using (Mastership.Request(controller.Rapid))
+                {
+                    if (radioButton_guanjie.Checked)
+                    {
+                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", join);
+                        if (num1 == "0")
+                        {
+                            if (rapidData.RapidType == "num")
+                            {
+                                Num rd = new Num();
+                                rd.FillFromString2(num1);
+                                rapidData.Value = rd;
+
+                            }
+                        }
+                        else
+                        {
+
+                            if ((float.Parse(textBox4.Text) + 5) > lin1)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2(num1);
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
+                        }
+
+
+                    }
+                    else if (radioButton_world.Checked)
+                    {
+                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", l);
+
+                        if (num2 == "0")
+                        {
+                            if (rapidData.RapidType == "num")
+                            {
+                                Num rd = new Num();
+                                rd.FillFromString2(num2);
+                                rapidData.Value = rd;
+
+                            }
+                        }
+                        else
+                        {
+                            if ((float.Parse(textBox4.Text) + 5) > lin2)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2(num2);
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
+                        }
+
+
+                    }
+
+                }
 
 
 
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("减小时出错" + ex.Message.ToString());
+            }
+        }
+
+
+
+        //满1s时发生
         private void timer_exercise_Tick(object sender, EventArgs e)
         {
             timer_exercise.Stop();
             if (Button1 == 1)
             {
-                Send_Exercise_num("join1", "xl", "3", "3");
+                Send_Exercise_num_Add("join1", "xl", "3", "3", 155, 560);
                 Button1 = 0;
             }
             else if (Button2 == 1)
             {
-                Send_Exercise_num("join2", "yl", "3", "3");
+                Send_Exercise_num_Add("join2", "yl", "3", "3", 100, 560);
                 Button2 = 0;
 
             }
             else if (Button3 == 1)
             {
-                Send_Exercise_num("join3", "zl", "3", "3");
+                Send_Exercise_num_Add("join3", "zl", "3", "3", 60, 120);
                 Button3 = 0;
             }
             else if (Button4 == 1)
             {
-                Send_Exercise_num("join4", "rxl", "3", "3");
+                Send_Exercise_num_Add("join4", "rxl", "3", "3", 150, 170);
                 Button4 = 0;
             }
             else if (Button5 == 1)
             {
-                Send_Exercise_num("join5", "ryl", "3", "3");
+                Send_Exercise_num_Add("join5", "ryl", "3", "3", 110, 170);
                 Button5 = 0;
             }
             else if (Button6 == 1)
             {
-                Send_Exercise_num("join6", "rzl", "3", "3");
+                Send_Exercise_num_Add("join6", "rzl", "3", "3", 390, 170);
                 Button6 = 0;
             }
             else if (Button7 == 1)
             {
-                Send_Exercise_num("join1", "xl", "4", "4");
+                Send_Exercise_num_Sub("join1", "xl", "4", "4", -155, -560);
                 Button7 = 0;
             }
             else if (Button8 == 1)
             {
-                Send_Exercise_num("join2", "yl", "4", "4");
+                Send_Exercise_num_Sub("join2", "yl", "4", "4", -100, -560);
                 Button8 = 0;
             }
             else if (Button9 == 1)
             {
-                Send_Exercise_num("join3", "zl", "4", "4");
+                Send_Exercise_num_Sub("join3", "zl", "4", "4", -80, -105);
                 Button9 = 0;
             }
             else if (Button10 == 1)
             {
-                Send_Exercise_num("join4", "rxl", "4", "4");
+                Send_Exercise_num_Sub("join4", "rxl", "4", "4", -150, -170);
                 Button10 = 0;
             }
             else if (Button11 == 1)
             {
-                Send_Exercise_num("join5", "ryl", "4", "4");
+                Send_Exercise_num_Sub("join5", "ryl", "4", "4", -110, -170);
                 Button11 = 0;
             }
             else if (Button12 == 1)
             {
-                Send_Exercise_num("join6", "rzl", "4", "4");
+                Send_Exercise_num_Sub("join6", "rzl", "4", "4", -390, -170);
                 Button12 = 0;
             }
         }
@@ -1194,7 +1301,7 @@ namespace WinFormsControlLibrary2
         private void button26_MouseUp(object sender, MouseEventArgs e)
         {
             timer_exercise.Stop();
-            Send_Exercise_num("join1", "xl", "0", "0");
+            Send_Exercise_num_Add("join1", "xl", "0", "0", 155, 560);
 
 
         }
@@ -1208,8 +1315,7 @@ namespace WinFormsControlLibrary2
         private void button27_MouseUp(object sender, MouseEventArgs e)
         {
             timer_exercise.Stop();
-            Send_Exercise_num("join2", "yl", "0", "0");
-
+            Send_Exercise_num_Add("join2", "yl", "0", "0", 100, 560);
 
         }
         private void button28_MouseDown(object sender, MouseEventArgs e)
@@ -1222,7 +1328,7 @@ namespace WinFormsControlLibrary2
         private void button28_MouseUp(object sender, MouseEventArgs e)
         {
             timer_exercise.Stop();
-            Send_Exercise_num("join3", "zl", "0", "0");
+            Send_Exercise_num_Add("join3", "zl", "0", "0", 60, 120);
 
 
         }
@@ -1236,7 +1342,7 @@ namespace WinFormsControlLibrary2
         private void button29_MouseUp(object sender, MouseEventArgs e)
         {
             timer_exercise.Stop();
-            Send_Exercise_num("join4", "rxl", "0", "0");
+            Send_Exercise_num_Add("join4", "rxl", "0", "0", 150, 170);
 
 
         }
@@ -1250,7 +1356,7 @@ namespace WinFormsControlLibrary2
         private void button30_MouseUp(object sender, MouseEventArgs e)
         {
             timer_exercise.Stop();
-            Send_Exercise_num("join5", "ryl", "0", "0");
+            Send_Exercise_num_Add("join5", "ryl", "0", "0", 110, 170);
 
 
         }
@@ -1264,7 +1370,7 @@ namespace WinFormsControlLibrary2
         private void button31_MouseUp(object sender, MouseEventArgs e)
         {
             timer_exercise.Stop();
-            Send_Exercise_num("join6", "rzl", "0", "0");
+            Send_Exercise_num_Add("join6", "rzl", "0", "0", 390, 170);
 
 
         }
@@ -1278,7 +1384,7 @@ namespace WinFormsControlLibrary2
         private void button33_MouseUp(object sender, MouseEventArgs e)
         {
             timer_exercise.Stop();
-            Send_Exercise_num("join1", "xl", "0", "0");
+            Send_Exercise_num_Sub("join1", "xl", "  0", "0", -155, -560);
 
 
         }
@@ -1292,7 +1398,7 @@ namespace WinFormsControlLibrary2
         private void button34_MouseUp(object sender, MouseEventArgs e)
         {
             timer_exercise.Stop();
-            Send_Exercise_num("join2", "yl", "0", "0");
+            Send_Exercise_num_Sub("join2", "yl", "0", "0", -100, -560);
 
 
         }
@@ -1306,7 +1412,7 @@ namespace WinFormsControlLibrary2
         private void button35_MouseUp(object sender, MouseEventArgs e)
         {
             timer_exercise.Stop();
-            Send_Exercise_num("join3", "zl", "0", "0");
+            Send_Exercise_num_Sub("join3", "zl", "0", "0", -80, -105);
 
 
         }
@@ -1320,8 +1426,7 @@ namespace WinFormsControlLibrary2
         private void button36_MouseUp(object sender, MouseEventArgs e)
         {
             timer_exercise.Stop();
-            Send_Exercise_num("join4", "rxl", "0", "0");
-
+            Send_Exercise_num_Sub("join4", "rxl", "0", "0", -150, -170);
 
         }
         private void button37_MouseDown(object sender, MouseEventArgs e)
@@ -1334,9 +1439,7 @@ namespace WinFormsControlLibrary2
         private void button37_MouseUp(object sender, MouseEventArgs e)
         {
             timer_exercise.Stop();
-            Send_Exercise_num("join5", "ryl", "0", "0");
-
-
+            Send_Exercise_num_Sub("join5", "ryl", "0", "0", -110, -170);
         }
         private void button38_MouseDown(object sender, MouseEventArgs e)
         {
@@ -1348,7 +1451,7 @@ namespace WinFormsControlLibrary2
         private void button38_MouseUp(object sender, MouseEventArgs e)
         {
             timer_exercise.Stop();
-            Send_Exercise_num("join6", "rzl", "0", "0");
+            Send_Exercise_num_Sub("join6", "rzl", "0", "0", -390, -170);
 
 
         }
@@ -1428,8 +1531,8 @@ namespace WinFormsControlLibrary2
 
         private void button39_Click(object sender, EventArgs e)
         {
-            string  localFilePath = $@"C:\Users\tan\Documents\RobotStudio\Systems\System2\HOME\STu\FromStu.mod";
-            string modifiedCode = textBox_Rapid.Text;   
+            string localFilePath = $@"C:\Users\tan\Documents\RobotStudio\Systems\System2\HOME\STu\FromStu.mod";
+            string modifiedCode = textBox_Rapid.Text;
             System.IO.File.WriteAllText(localFilePath, modifiedCode, Encoding.UTF8);
             try
             {
@@ -1453,6 +1556,16 @@ namespace WinFormsControlLibrary2
             {
                 MessageBox.Show(ex.Message.ToString());
             }
+
+        }
+
+        private void comboBox_Save_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton_User_CheckedChanged(object sender, EventArgs e)
+        {
 
         }
     }
