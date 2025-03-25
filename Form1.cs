@@ -79,11 +79,12 @@ namespace WinFormsControlLibrary2
             {
                 item = new ListViewItem(controllerInfo.IPAddress.ToString());//获取控制器IP地址
                 item.SubItems.Add(controllerInfo.Id);//获取控制器ID
-                item.SubItems.Add(controllerInfo.Availability.ToString());//获取控制器可用性
-                item.SubItems.Add(controllerInfo.IsVirtual.ToString());//获取控制器是否虚拟
                 item.SubItems.Add(controllerInfo.SystemName);//获取控制器系统名称
-                item.SubItems.Add(controllerInfo.Version.ToString());//获取控制器版本
+                item.SubItems.Add(controllerInfo.IsVirtual.ToString());//获取控制器是否虚拟
+                item.SubItems.Add(controllerInfo.Availability.ToString());//获取控制器可用性
                 item.SubItems.Add(controllerInfo.ControllerName);//获取控制器名称
+                item.SubItems.Add(controllerInfo.Version.ToString());//获取控制器版本
+
                 this.listView1.Items.Add(item);//将获取的控制器信息添加到listview中
                 item.Tag = controllerInfo;
             }
@@ -246,8 +247,10 @@ namespace WinFormsControlLibrary2
             {
                 item = new ListViewItem(signal.Name);
                 item.SubItems.Add(signal.Type.ToString());
-                item.SubItems.Add(signal.Unit.ToString());
                 item.SubItems.Add(signal.Value.ToString());
+                item.SubItems.Add(signal.Unit.ToString());
+                item.SubItems.Add(signal.ToString());
+
                 this.listView2.Items.Add(item);
                 item.Tag = signal;
             }
@@ -263,7 +266,7 @@ namespace WinFormsControlLibrary2
         {
 
         }
-
+        //使用时要在示教器钟开启ALL权限
         private void button5_Click(object sender, EventArgs e)
         {
             try
@@ -273,12 +276,13 @@ namespace WinFormsControlLibrary2
                     Signal signal = controller.IOSystem.GetSignal(textSigName.Text.ToString());
 
                     signal.Value = Convert.ToSingle(textGetSig.Text);
+                    //MessageBox.Show($"Setting signal {signalName} to value {signalValue}");
                 }
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString());
+                MessageBox.Show("改变量没有开启ALL权限!");
             }
 
         }
@@ -1531,25 +1535,35 @@ namespace WinFormsControlLibrary2
 
         private void button39_Click(object sender, EventArgs e)
         {
-            string localFilePath = $@"C:\Users\tan\Documents\RobotStudio\Systems\System2\HOME\STu\FromStu.mod";
+            try
+            {
+                string rootDirectory = controller.FileSystem.RemoteDirectory;
+
+                string newFolderPath = "\\FromStl";
+
+                if (!controller.FileSystem.DirectoryExists(newFolderPath))
+                {
+                    controller.FileSystem.CreateDirectory(newFolderPath);
+                    MessageBox.Show($"文件夹 '{StaticString}' 创建成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"创建文件夹失败: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            string localFilePath = (controller.FileSystem.RemoteDirectory + "\\FromStl\\FromStu" + DateTime.Now.ToString("yyyy-MM-dd")+".mod");
             string modifiedCode = textBox_Rapid.Text;
             System.IO.File.WriteAllText(localFilePath, modifiedCode, Encoding.UTF8);
             try
             {
                 using (Mastership m = Mastership.Request(controller.Rapid))
                 {
-                    string RemoteDir = controller.FileSystem.RemoteDirectory + "/STu/FromStu.mod";
-
+                    string RemoteDir = controller.FileSystem.RemoteDirectory + "\\FromStl\\FromStu" + DateTime.Now.ToString("yyyy-MM-dd") + ".mod";
+                    
                     tasks = controller.Rapid.GetTasks();
                     bool flag1 = tasks[0].LoadModuleFromFile(RemoteDir, RapidLoadMode.Replace);
-                    if (flag1)
-                    {
-                        MessageBox.Show("加载成功");
-                    }
-                    else
-                    {
-                        MessageBox.Show("加载失败");
-                    }
+
                 }
             }
             catch (Exception ex)
@@ -1568,6 +1582,8 @@ namespace WinFormsControlLibrary2
         {
 
         }
+
+        
     }
 }
 

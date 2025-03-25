@@ -458,7 +458,7 @@ namespace WinFormsControlLibrary2
             {
                 string rootDirectory = controller.FileSystem.RemoteDirectory;
 
-                string newFolderPath = $"{rootDirectory}/{StaticString}";
+                string newFolderPath = "\\NewFloder";
 
                 if (!controller.FileSystem.DirectoryExists(newFolderPath))
                 {
@@ -486,7 +486,7 @@ namespace WinFormsControlLibrary2
                     if (uas.CheckDemandGrant(Grant.BackupController))
                     {
                         string s = controller.SystemName + "_backup" + DateTime.Now.ToString("yyyy-MM-dd");
-                        controller.Backup(@"/StaticString/" + s);
+                        controller.Backup("\\" + s);
                         MessageBox.Show("备份成功");
                     }
                     else

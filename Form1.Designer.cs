@@ -34,15 +34,15 @@ namespace WinFormsControlLibrary2
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            ListViewItem listViewItem2 = new ListViewItem(new string[] { "" }, -1, Color.Empty, SystemColors.Info, null);
+            ListViewItem listViewItem1 = new ListViewItem(new string[] { "" }, -1, Color.Empty, SystemColors.Info, null);
             listView1 = new ListView();
             columnHeader7 = new ColumnHeader();
             columnHeader8 = new ColumnHeader();
-            columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
-            columnHeader4 = new ColumnHeader();
             columnHeader5 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
             columnHeader1 = new ColumnHeader();
+            columnHeader4 = new ColumnHeader();
             button1 = new Button();
             tabControl1 = new TabControl();
             tabPage2 = new TabPage();
@@ -205,10 +205,10 @@ namespace WinFormsControlLibrary2
             // 
             // listView1
             // 
-            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader7, columnHeader8, columnHeader2, columnHeader3, columnHeader4, columnHeader5, columnHeader1 });
+            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader7, columnHeader8, columnHeader3, columnHeader5, columnHeader2, columnHeader1, columnHeader4 });
             listView1.Location = new Point(25, 6);
             listView1.Name = "listView1";
-            listView1.Size = new Size(1123, 479);
+            listView1.Size = new Size(1171, 479);
             listView1.TabIndex = 1;
             listView1.UseCompatibleStateImageBehavior = false;
             listView1.View = View.Details;
@@ -225,35 +225,35 @@ namespace WinFormsControlLibrary2
             columnHeader8.Text = "ID";
             columnHeader8.Width = 200;
             // 
-            // columnHeader2
-            // 
-            columnHeader2.DisplayIndex = 3;
-            columnHeader2.Text = "是否虚拟";
-            columnHeader2.Width = 200;
-            // 
             // columnHeader3
             // 
             columnHeader3.DisplayIndex = 4;
-            columnHeader3.Text = "系统名称";
+            columnHeader3.Text = "控制器名称";
             columnHeader3.Width = 200;
+            // 
+            // columnHeader5
+            // 
+            columnHeader5.DisplayIndex = 6;
+            columnHeader5.Text = "是否虚拟";
+            columnHeader5.Width = 200;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.DisplayIndex = 3;
+            columnHeader2.Text = "是否可用";
+            columnHeader2.Width = 200;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.DisplayIndex = 2;
+            columnHeader1.Text = "系统名称";
+            columnHeader1.Width = 200;
             // 
             // columnHeader4
             // 
             columnHeader4.DisplayIndex = 5;
             columnHeader4.Text = "控制器版本";
             columnHeader4.Width = 200;
-            // 
-            // columnHeader5
-            // 
-            columnHeader5.DisplayIndex = 6;
-            columnHeader5.Text = "控制器名称";
-            columnHeader5.Width = 200;
-            // 
-            // columnHeader1
-            // 
-            columnHeader1.DisplayIndex = 2;
-            columnHeader1.Text = "是否可用";
-            columnHeader1.Width = 200;
             // 
             // button1
             // 
@@ -720,8 +720,8 @@ namespace WinFormsControlLibrary2
             // listView3
             // 
             listView3.Columns.AddRange(new ColumnHeader[] { columnHeader11, columnHeader12, columnHeader13, columnHeader14 });
-            listViewItem2.StateImageIndex = 0;
-            listView3.Items.AddRange(new ListViewItem[] { listViewItem2 });
+            listViewItem1.StateImageIndex = 0;
+            listView3.Items.AddRange(new ListViewItem[] { listViewItem1 });
             listView3.Location = new Point(1285, 169);
             listView3.Name = "listView3";
             listView3.Size = new Size(566, 788);
@@ -1575,7 +1575,7 @@ namespace WinFormsControlLibrary2
             button21.TabIndex = 0;
             button21.Text = "备份";
             button21.UseVisualStyleBackColor = true;
-            button21.Click += button21_Click;
+            button21.Click += this.button21_Click;
             // 
             // tabPage11
             // 
