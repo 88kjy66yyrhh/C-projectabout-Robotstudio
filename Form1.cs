@@ -431,10 +431,11 @@ namespace WinFormsControlLibrary2
             {
                 using (Mastership m = Mastership.Request(controller.Rapid))
                 {
-                    RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Module1", "ao_speed");
+                    RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "no_speed");
                     Num speed = (Num)rapidData.Value;
                     speed.FillFromString2(textBoxWrite_speed.Text);
                     rapidData.Value = speed;
+                    MessageBox.Show("已经将最大速度设置为"+ textBoxWrite_speed.Text.ToString());
                 }
             }
             catch (Exception ex)

@@ -37,15 +37,16 @@ using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.Distributions;
 namespace WinFormsControlLibrary2
 {
- 
-    
-        
-    
+
+
+
+
+
 
     //class Sensor
     //{
     //    private Thread _sensorThread = null;
-        
+
     //    private bool _exitThread = false;
     //    private uint _seqNumber = 0;
     //    private UdpClient _udpServer = new UdpClient(6510);
@@ -56,11 +57,11 @@ namespace WinFormsControlLibrary2
     //        string egmServerIp = "127.0.0.1"; // 替换为实际的 EGM 服务器 IP 地址
     //        int egmServerPort = 6510;
     //        // create an udp client and listen on any address and the port _ipPortNumber
-           
-                
-           
-            
-            
+
+
+
+
+
     //        var remoteEP = new IPEndPoint(IPAddress.Any, egmServerPort);
 
     //        while (_exitThread == false)
@@ -117,7 +118,7 @@ namespace WinFormsControlLibrary2
     //                Form1.robot_x_current = robot.FeedBack.Cartesian.Pos.X;
     //                Form1.robot_y_current = robot.FeedBack.Cartesian.Pos.Y;
     //            }
-                
+
     //        }
     //        else
     //        {
@@ -189,7 +190,7 @@ namespace WinFormsControlLibrary2
        
            // 定义一个静态字段
             public static string StaticString = "NewFloder";//将RApid文件保存到根目录下的文件夹名
-        public  static int button21_Count = 1;
+        public  static int button21_Count = 0;
        
 
         // 定义一个静态方法来设置静态字段的值
@@ -450,7 +451,7 @@ namespace WinFormsControlLibrary2
             return;
         }
 
-
+        //这个先不用
         private void button21_Click(object sender, EventArgs e)
         {
             //创建一个新的文件夹
@@ -468,9 +469,9 @@ namespace WinFormsControlLibrary2
                 else
                 {
                     MessageBox.Show($"文件夹 '{StaticString}' 已经存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                    SetStaticString("NewFloder" + button21_Count.ToString());
                     button21_Count++;
+                    SetStaticString("\\"+"NewFloder" + button21_Count.ToString());
+                    controller.FileSystem.CreateDirectory(StaticString);
                 }
             }
             catch (Exception ex)
@@ -485,9 +486,21 @@ namespace WinFormsControlLibrary2
                     UserAuthorizationSystem uas = controller.AuthenticationSystem;
                     if (uas.CheckDemandGrant(Grant.BackupController))
                     {
+                       
                         string s = controller.SystemName + "_backup" + DateTime.Now.ToString("yyyy-MM-dd");
-                        controller.Backup("\\" + s);
-                        MessageBox.Show("备份成功");
+
+                        if (button21_Count != 0)
+                        {
+                            controller.Backup($@"NewFloder{button21_Count}/" + s);
+                            MessageBox.Show("备份成功");
+                        }
+                        else
+                        {
+                            controller.Backup(@"NewFloder/" + s);
+                            MessageBox.Show("备份成功");
+
+                        }
+
                     }
                     else
                     {
