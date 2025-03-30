@@ -892,14 +892,12 @@ namespace WinFormsControlLibrary2
                 {
                 tasks = controller.Rapid.GetTasks();
                     bool flag1 = tasks[0].LoadModuleFromFile(RemoteDir, RapidLoadMode.Replace);
-                    if (flag1)
-                    {
+                    
                         MessageBox.Show("加载成功");
-                    }
-                    else
-                    {
-                        MessageBox.Show("加载失败");
-                    }
+                    
+                   
+
+                    
              }
             }
             else
