@@ -1365,7 +1365,7 @@ namespace WinFormsControlLibrary2
             // 
             comboBox4.FormattingEnabled = true;
             comboBox4.Items.AddRange(new object[] { "robtarget", "num", "bool", "string", "pos", "orient", "jointtarget" });
-            comboBox4.Location = new Point(1543, 536);
+            comboBox4.Location = new Point(1543, 528);
             comboBox4.Name = "comboBox4";
             comboBox4.Size = new Size(182, 32);
             comboBox4.TabIndex = 2;
@@ -1575,7 +1575,7 @@ namespace WinFormsControlLibrary2
             button21.TabIndex = 0;
             button21.Text = "备份";
             button21.UseVisualStyleBackColor = true;
-            button21.Click += this.button21_Click;
+            button21.Click += button21_Click;
             // 
             // tabPage11
             // 

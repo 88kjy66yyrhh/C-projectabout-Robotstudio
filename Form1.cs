@@ -233,11 +233,6 @@ namespace WinFormsControlLibrary2
 
         }
 
-        private void listView2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void button4_Click(object sender, EventArgs e)
         {
             SignalCollection signals = new SignalCollection();
@@ -820,7 +815,7 @@ namespace WinFormsControlLibrary2
                 ListViewItem item = new ListViewItem(rapidData.Name.ToString());
                 item.SubItems.Add(symbol.Type.ToString());
                 item.SubItems.Add(rapidData.RapidType.ToString());
-                item.SubItems.Add(rapidData.Value.ToString());
+                item.SubItems.Add(rapidData.Value?.ToString() ?? "null");
                 this.listView4.Items.Add(item);
                 item.Tag = symbol;
             }
@@ -892,9 +887,10 @@ namespace WinFormsControlLibrary2
         {
             if (comboBox_jiazai.SelectedItem != null)
             {
-                string RemoteDir = controller.FileSystem.RemoteDirectory + comboBox_jiazai.SelectedItem.ToString();
+                string RemoteDir = controller.FileSystem.RemoteDirectory + @"/"+comboBox_jiazai.SelectedItem.ToString();
                 using (Mastership m = Mastership.Request(controller.Rapid))
                 {
+                tasks = controller.Rapid.GetTasks();
                     bool flag1 = tasks[0].LoadModuleFromFile(RemoteDir, RapidLoadMode.Replace);
                     if (flag1)
                     {
@@ -904,7 +900,7 @@ namespace WinFormsControlLibrary2
                     {
                         MessageBox.Show("加载失败");
                     }
-                }
+             }
             }
             else
             {
@@ -940,21 +936,66 @@ namespace WinFormsControlLibrary2
 
         private void button20_Click(object sender, EventArgs e)
         {
-            if (comboBox_pgf.SelectedItem != null)
+            //if (comboBox_pgf.SelectedItem != null)
+            //{
+            //    string RemoteDir = controller.FileSystem.RemoteDirectory + comboBox_pgf.SelectedItem.ToString();
+            //    using (Mastership m = Mastership.Request(controller.Rapid))
+            //    {
+            //        bool flag1 = tasks[0].LoadModuleFromFile(RemoteDir, RapidLoadMode.Replace);
+            //        if (flag1)
+            //        {
+            //            MessageBox.Show("加载成功");
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("加载失败");
+            //        }
+            //    }
+            //}
+            string strFileFullPath = "";
+            string strFileName = "";
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "RAPID文件(*.mod; *.sys)|*.mod;*.sys|PGF文件(*.pgf)|*.pgf|所有文件|*.*";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string RemoteDir = controller.FileSystem.RemoteDirectory + comboBox_pgf.SelectedItem.ToString();
+                strFileFullPath = openFileDialog.FileName;
+                strFileName = openFileDialog.SafeFileName;
+
+            }
+            try
+            {
+                if (controller.FileSystem.FileExists(@"/" + strFileName))
+                {
+                    controller.FileSystem.PutFile(strFileFullPath, "\\" + strFileName, true);
+
+                }
+                else
+                {
+
+                    controller.FileSystem.PutFile(strFileFullPath, "\\" + strFileName, false);
+
+                }
+                string RemoteDir = controller.FileSystem.RemoteDirectory + @"/" + strFileName;
                 using (Mastership m = Mastership.Request(controller.Rapid))
                 {
-                    bool flag1 = tasks[0].LoadModuleFromFile(RemoteDir, RapidLoadMode.Replace);
-                    if (flag1)
-                    {
-                        MessageBox.Show("加载成功");
-                    }
-                    else
-                    {
-                        MessageBox.Show("加载失败");
-                    }
+                    tasks = controller.Rapid.GetTasks();
+                    tasks[0].LoadModuleFromFile(RemoteDir, RapidLoadMode.Replace);
+
+
+                    MessageBox.Show("加载成功");
+
+
                 }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+                
+            }
+            finally
+            {
+              
             }
 
         }
@@ -963,18 +1004,21 @@ namespace WinFormsControlLibrary2
         {
             try
             {
+                
+                
+                    string RemoteDir = controller.FileSystem.RemoteDirectory + "/";
+                    ControllerFileSystemInfo[] controllerFileSystemInfo = controller.FileSystem.GetFilesAndDirectories("HOME:");
 
-                string RemoteDir = controller.FileSystem.RemoteDirectory + "/";
-                ControllerFileSystemInfo[] controllerFileSystemInfo = controller.FileSystem.GetFilesAndDirectories("HOME:");
+                    comboBox_jiazai.Items.Clear();
 
-                comboBox_jiazai.Items.Clear();
-
-                foreach (ControllerFileSystemInfo info in controllerFileSystemInfo)
-                {
-                    comboBox_jiazai.Items.Add(info.Name.ToString());
+                    foreach (ControllerFileSystemInfo info in controllerFileSystemInfo)
+                    {
+                        comboBox_jiazai.Items.Add(info.Name.ToString());
 
 
-                }
+                    }
+
+                
             }
             catch (Exception ex)
             {
