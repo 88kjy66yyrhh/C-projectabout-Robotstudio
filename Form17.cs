@@ -19,7 +19,7 @@ using ABB.Robotics.Controllers;
 using ABB.Robotics.Controllers.EventLogDomain;
 
 
-
+using ReaLTaiizor.Enum;
 
 using System;
 using System.Collections.Generic;
@@ -898,29 +898,21 @@ namespace ReaLTaiizor.UI
         {
             try
             {
-                if (controller.OperatingMode == ControllerOperatingMode.Auto)
+                if (comboBox_Restart.SelectedItem != null)
                 {
-                    tasks = controller.Rapid.GetTasks();
-                    using (Mastership m = Mastership.Request(controller.Rapid))
+                    using (Mastership m = Mastership.Request(controller))
                     {
-                        controller.Rapid.Stop(StopMode.Immediate);
+                        controller.Restart((ControllerStartMode)System.Enum.Parse(typeof(ControllerStartMode), comboBox_Restart.SelectedItem.ToString()));
                     }
-
                 }
                 else
                 {
-                    MessageBox.Show("请切换至自动模式");
+                    MessageBox.Show("请选择一个重启模式", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-
-            }
-            catch (System.InvalidOperationException ex)
-            {
-                MessageBox.Show("权限被其他客户占有" + ex.Message);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString());
-
+                MessageBox.Show($"重启失败: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -1042,6 +1034,7 @@ namespace ReaLTaiizor.UI
                     txtShowRdQ1.Text = robTarget.Rot.Q1.ToString();
                     txtShowRdQ2.Text = robTarget.Rot.Q2.ToString();
                     txtShowRdQ3.Text = robTarget.Rot.Q3.ToString();
+                    txtShowRdQ4.Text = robTarget.Rot.Q4.ToString();
                 }
                 else if (rapidData.IsArray)
                 {
@@ -1108,7 +1101,7 @@ namespace ReaLTaiizor.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("改变量没有开启ALL权限!");
+                MessageBox.Show("该变量没有开启ALL权限!");
             }
 
         }
@@ -1277,7 +1270,7 @@ namespace ReaLTaiizor.UI
         private void Uodate_GUI_Status(object sender, System.EventArgs e)
         {
             ExecutionStatusChangedEventArgs ex = (ExecutionStatusChangedEventArgs)e;
-            label_Status.Text = "控制器状态：\r\n" + ex.Status.ToString() + "\r\n" + "控制器模式：\r\n" + ex.Time.ToString();
+            label_Status.Text = "控制器状态：" + ex.Status.ToString();
 
         }
         private void controller_StateChanged(object sender, StateChangedEventArgs e)
@@ -1288,7 +1281,7 @@ namespace ReaLTaiizor.UI
         private void Uodate_GUI_State(object sender, System.EventArgs e)
         {
             StateChangedEventArgs ex = (StateChangedEventArgs)e;
-            label_State.Text = "控制器状态：\r\n" + ex.NewState.ToString() + "\r\n" + "控制器模式：\r\n" + ex.Time.ToString();
+            label_State.Text = "控制器状态：" + ex.NewState.ToString();
 
         }
 
@@ -1301,7 +1294,7 @@ namespace ReaLTaiizor.UI
         private void Uodate_GUI_Operate(object sender, System.EventArgs e)
         {
             OperatingModeChangeEventArgs ex = (OperatingModeChangeEventArgs)e;
-            label_Operate.Text = "控制器状态：\r\n" + ex.NewMode.ToString() + "\r\n" + "控制器模式：\r\n" + ex.Time.ToString();
+            label_Operate.Text = "控制器模式：" + ex.NewMode.ToString();
 
         }
 
@@ -2630,18 +2623,17 @@ namespace ReaLTaiizor.UI
         {
             if (comboBox_jiazai.SelectedItem != null)
             {
-                string RemoteDir = controller.FileSystem.RemoteDirectory + comboBox_jiazai.SelectedItem.ToString();
+                string RemoteDir = controller.FileSystem.RemoteDirectory + @"/" + comboBox_jiazai.SelectedItem.ToString();
                 using (Mastership m = Mastership.Request(controller.Rapid))
                 {
+                    tasks = controller.Rapid.GetTasks();
                     bool flag1 = tasks[0].LoadModuleFromFile(RemoteDir, RapidLoadMode.Replace);
-                    if (flag1)
-                    {
-                        MessageBox.Show("加载成功");
-                    }
-                    else
-                    {
-                        MessageBox.Show("加载失败");
-                    }
+
+                    MessageBox.Show("加载成功");
+
+
+
+
                 }
             }
             else
@@ -2675,7 +2667,6 @@ namespace ReaLTaiizor.UI
             {
                 MessageBox.Show("请选择一个模块");
             }
-
         }
 
         private void materialButton55_Click(object sender, EventArgs e)
@@ -2695,6 +2686,52 @@ namespace ReaLTaiizor.UI
                         MessageBox.Show("加载失败");
                     }
                 }
+
+            }
+            else
+            {
+                string strFileFullPath = "";
+                string strFileName = "";
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "RAPID文件(*.mod; *.sys)|*.mod;*.sys|PGF文件(*.pgf)|*.pgf|所有文件|*.*";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    strFileFullPath = openFileDialog.FileName;
+                    strFileName = openFileDialog.SafeFileName;
+
+                }
+                try
+                {
+                    if (controller.FileSystem.FileExists(@"/" + strFileName))
+                    {
+                        controller.FileSystem.PutFile(strFileFullPath, "\\" + strFileName, true);
+
+                    }
+                    else
+                    {
+
+                        controller.FileSystem.PutFile(strFileFullPath, "\\" + strFileName, false);
+
+                    }
+                    string RemoteDir = controller.FileSystem.RemoteDirectory + @"/" + strFileName;
+                    using (Mastership m = Mastership.Request(controller.Rapid))
+                    {
+                        tasks = controller.Rapid.GetTasks();
+                        tasks[0].LoadModuleFromFile(RemoteDir, RapidLoadMode.Replace);
+
+
+                        MessageBox.Show("加载成功");
+
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+
+                }
+
             }
 
         }
@@ -2760,7 +2797,6 @@ namespace ReaLTaiizor.UI
             {
                 MessageBox.Show($"备份失败: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private void materialButton58_Click(object sender, EventArgs e)
@@ -2774,7 +2810,7 @@ namespace ReaLTaiizor.UI
             textBox_work.AppendText("主机CPU温度:" + mainComputerServiceInfo.Temperature.ToString() + "\r\n");
             textBox_work.AppendText("主机CPU信息:" + mainComputerServiceInfo.CpuInfo.ToString() + "\r\n");
             textBox_work.AppendText("主机存储大小:" + mainComputerServiceInfo.RamSize.ToString() + "\r\n");
-            
+
         }
 
         private void materialButton59_Click(object sender, EventArgs e)
@@ -2809,42 +2845,42 @@ namespace ReaLTaiizor.UI
 
         private void hopePictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-        //    Down_point = new Point(e.X, e.Y);//记录鼠标按下的点
-        //    Last_point = new Point(e.X, e.Y);//记录鼠标按下的点
-        //    bCatch = true;
-        //    bGet = true;
+            //    Down_point = new Point(e.X, e.Y);//记录鼠标按下的点
+            //    Last_point = new Point(e.X, e.Y);//记录鼠标按下的点
+            //    bCatch = true;
+            //    bGet = true;
 
         }
 
         private void hopePictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-        //    Graphics g1 = hopePictureBox1.CreateGraphics();//创建画板
-        //    if (bCatch == true)
-        //    {
-        //        this.Invoke(new Action(() =>
-        //        {
-        //            New_point = new Point(e.X, e.Y);//记录鼠标移动的新点
-        //            Pen pen = new Pen(Color.Red, 2);//画笔
-        //            g1.DrawLine(pen, Last_point, New_point);//画线
-        //            Last_point = New_point;//将新点赋值给上一个点
-        //            textBox_move.Text = "X:" + (0.1 * (New_point.X - Down_point.X)).ToString() + "Y:" + (0.1 * (New_point.Y - Down_point.Y)).ToString();//显示移动的距离
-        //        }));
+            //    Graphics g1 = hopePictureBox1.CreateGraphics();//创建画板
+            //    if (bCatch == true)
+            //    {
+            //        this.Invoke(new Action(() =>
+            //        {
+            //            New_point = new Point(e.X, e.Y);//记录鼠标移动的新点
+            //            Pen pen = new Pen(Color.Red, 2);//画笔
+            //            g1.DrawLine(pen, Last_point, New_point);//画线
+            //            Last_point = New_point;//将新点赋值给上一个点
+            //            textBox_move.Text = "X:" + (0.1 * (New_point.X - Down_point.X)).ToString() + "Y:" + (0.1 * (New_point.Y - Down_point.Y)).ToString();//显示移动的距离
+            //        }));
 
-        //        //Create_Sensor_Message();
-        //        System.Threading.Tasks.Task.Run(() =>
-        //        {
-        //            Display_inbouse_Message(robot);
-        //            Create_Sensor_Message();
-        //        });
-        //    }
+            //        //Create_Sensor_Message();
+            //        System.Threading.Tasks.Task.Run(() =>
+            //        {
+            //            Display_inbouse_Message(robot);
+            //            Create_Sensor_Message();
+            //        });
+            //    }
 
         }
 
         private void hopePictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-        //    bCatch = false;
-        //    Graphics g1 = hopePictureBox1.CreateGraphics();
-        //    g1.Clear(Color.White);
+            //    bCatch = false;
+            //    Graphics g1 = hopePictureBox1.CreateGraphics();
+            //    g1.Clear(Color.White);
 
         }
 
@@ -2885,6 +2921,35 @@ namespace ReaLTaiizor.UI
             {
                 MessageBox.Show(ex.Message.ToString());
             }
+        }
+
+        private void materialCard7_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void materialComboBox12_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void materialCard8_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void Form17_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void materialTabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void materialCard5_Paint(object sender, PaintEventArgs e)
+        {
 
         }
     }

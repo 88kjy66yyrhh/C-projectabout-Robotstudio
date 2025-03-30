@@ -53,14 +53,14 @@ namespace ReaLTaiizor.UI
             materialSwitch5 = new MaterialSwitch();
             materialSwitch4 = new MaterialSwitch();
             materialCard7 = new MaterialCard();
+            materialListView2 = new PoisonListView();
+            IP地址 = new ColumnHeader();
+            ID = new ColumnHeader();
+            系统名称 = new ColumnHeader();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
+            columnHeader3 = new ColumnHeader();
             materialButton51 = new MaterialButton();
-            materialListView2 = new MaterialListView();
-            columnHeader5 = new ColumnHeader();
-            columnHeader6 = new ColumnHeader();
-            columnHeader7 = new ColumnHeader();
-            columnHeader8 = new ColumnHeader();
-            columnHeader9 = new ColumnHeader();
-            columnHeader10 = new ColumnHeader();
             materialLabel76 = new MaterialLabel();
             materialCard8 = new MaterialCard();
             materialButton8 = new MaterialButton();
@@ -75,7 +75,7 @@ namespace ReaLTaiizor.UI
             materialButton26 = new MaterialButton();
             materialButton25 = new MaterialButton();
             materialLabel6 = new MaterialLabel();
-            materialComboBox12 = new MaterialComboBox();
+            comboBox_Restart = new MaterialComboBox();
             label_Operate = new MaterialLabel();
             materialButton3 = new MaterialButton();
             materialCard9 = new MaterialCard();
@@ -90,6 +90,8 @@ namespace ReaLTaiizor.UI
             textGetSig = new MaterialMultiLineTextBoxEdit();
             textSigName = new MaterialMultiLineTextBoxEdit();
             materialCard5 = new MaterialCard();
+            materialLabel2 = new MaterialLabel();
+            txtShowRdQ4 = new MaterialMultiLineTextBoxEdit();
             materialLabel83 = new MaterialLabel();
             txtShowRdQ3 = new MaterialMultiLineTextBoxEdit();
             txtShowRdQ2 = new MaterialMultiLineTextBoxEdit();
@@ -113,20 +115,20 @@ namespace ReaLTaiizor.UI
             materialButton27 = new MaterialButton();
             txtShowRd = new MaterialMultiLineTextBoxEdit();
             materialCard11 = new MaterialCard();
+            listView3 = new PoisonListView();
+            columnHeader8 = new ColumnHeader();
+            columnHeader9 = new ColumnHeader();
+            columnHeader10 = new ColumnHeader();
+            columnHeader11 = new ColumnHeader();
+            listView2 = new PoisonListView();
+            columnHeader4 = new ColumnHeader();
+            columnHeader5 = new ColumnHeader();
+            columnHeader6 = new ColumnHeader();
+            columnHeader7 = new ColumnHeader();
             textBox_Sub_IO = new MaterialMultiLineTextBoxEdit();
             materialButton5 = new MaterialButton();
             materialButton2 = new MaterialButton();
             materialLabel85 = new MaterialLabel();
-            listView2 = new MaterialListView();
-            columnHeader11 = new ColumnHeader();
-            columnHeader12 = new ColumnHeader();
-            columnHeader13 = new ColumnHeader();
-            columnHeader14 = new ColumnHeader();
-            listView3 = new MaterialListView();
-            columnHeader15 = new ColumnHeader();
-            columnHeader16 = new ColumnHeader();
-            columnHeader17 = new ColumnHeader();
-            columnHeader18 = new ColumnHeader();
             tabPage14 = new System.Windows.Forms.TabPage();
             textBox9 = new MaterialMultiLineTextBoxEdit();
             materialButton46 = new MaterialButton();
@@ -179,14 +181,14 @@ namespace ReaLTaiizor.UI
             textBox_TpWrite = new MetroTextBox();
             textBox_TP_ReadNum = new MetroTextBox();
             tabPage15 = new System.Windows.Forms.TabPage();
+            listView4 = new PoisonListView();
+            columnHeader23 = new ColumnHeader();
+            columnHeader24 = new ColumnHeader();
+            columnHeader25 = new ColumnHeader();
+            columnHeader26 = new ColumnHeader();
             materialButton50 = new MaterialButton();
             comboBox4 = new MaterialComboBox();
             materialLabel80 = new MaterialLabel();
-            listView4 = new MaterialListView();
-            columnHeader19 = new ColumnHeader();
-            columnHeader20 = new ColumnHeader();
-            columnHeader21 = new ColumnHeader();
-            columnHeader22 = new ColumnHeader();
             tabPage16 = new System.Windows.Forms.TabPage();
             materialButton62 = new MaterialButton();
             textBox_Log = new MaterialMultiLineTextBoxEdit();
@@ -266,7 +268,7 @@ namespace ReaLTaiizor.UI
             // 
             // materialContextMenuStrip1
             // 
-            materialContextMenuStrip1.BackColor = Color.White;
+            materialContextMenuStrip1.BackColor = Color.FromArgb(255, 255, 255);
             materialContextMenuStrip1.Depth = 0;
             materialContextMenuStrip1.Font = new Font("Microsoft Sans Serif", 11F);
             materialContextMenuStrip1.ImageScalingSize = new Size(20, 20);
@@ -328,6 +330,7 @@ namespace ReaLTaiizor.UI
             // 
             // tabPage1
             // 
+            tabPage1.AutoScroll = true;
             tabPage1.BackColor = Color.White;
             tabPage1.Controls.Add(materialLabel52);
             tabPage1.Controls.Add(materialSwitch8);
@@ -342,7 +345,7 @@ namespace ReaLTaiizor.UI
             tabPage1.Location = new Point(4, 33);
             tabPage1.Margin = new Padding(6);
             tabPage1.Name = "tabPage1";
-            tabPage1.Size = new Size(1950, 1366);
+            tabPage1.Size = new Size(2017, 1161);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "主页";
             tabPage1.Click += MaterialButton29_Click;
@@ -464,8 +467,8 @@ namespace ReaLTaiizor.UI
             // materialCard7
             // 
             materialCard7.BackColor = Color.FromArgb(255, 255, 255);
-            materialCard7.Controls.Add(materialButton51);
             materialCard7.Controls.Add(materialListView2);
+            materialCard7.Controls.Add(materialButton51);
             materialCard7.Controls.Add(materialLabel76);
             materialCard7.Depth = 0;
             materialCard7.ForeColor = Color.FromArgb(222, 0, 0, 0);
@@ -476,6 +479,56 @@ namespace ReaLTaiizor.UI
             materialCard7.Padding = new Padding(14);
             materialCard7.Size = new Size(1255, 716);
             materialCard7.TabIndex = 61;
+            // 
+            // materialListView2
+            // 
+            materialListView2.Columns.AddRange(new ColumnHeader[] { IP地址, ID, 系统名称, columnHeader1, columnHeader2, columnHeader3 });
+            materialListView2.Font = new Font("Segoe UI", 12F);
+            materialListView2.ForeColor = SystemColors.Window;
+            materialListView2.FullRowSelect = true;
+            materialListView2.HideSelection = true;
+            materialListView2.Location = new Point(17, 70);
+            materialListView2.Name = "materialListView2";
+            materialListView2.OwnerDraw = true;
+            materialListView2.Size = new Size(1221, 520);
+            materialListView2.Style = Enum.Poison.ColorStyle.Custom;
+            materialListView2.TabIndex = 65;
+            materialListView2.Theme = Enum.Poison.ThemeStyle.Dark;
+            materialListView2.TileSize = new Size(5, 5);
+            materialListView2.UseCompatibleStateImageBehavior = false;
+            materialListView2.UseSelectable = true;
+            materialListView2.View = View.Details;
+            materialListView2.DoubleClick += materialListView2_DoubleClick;
+            // 
+            // IP地址
+            // 
+            IP地址.Text = "IP地址";
+            IP地址.Width = 200;
+            // 
+            // ID
+            // 
+            ID.Text = "ID";
+            ID.Width = 200;
+            // 
+            // 系统名称
+            // 
+            系统名称.Text = "系统名称";
+            系统名称.Width = 200;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "是否可用";
+            columnHeader1.Width = 200;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "控制器名称";
+            columnHeader2.Width = 200;
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "控制器版本";
+            columnHeader3.Width = 200;
             // 
             // materialButton51
             // 
@@ -498,58 +551,6 @@ namespace ReaLTaiizor.UI
             materialButton51.UseAccentColor = false;
             materialButton51.UseVisualStyleBackColor = true;
             materialButton51.Click += materialButton51_Click;
-            // 
-            // materialListView2
-            // 
-            materialListView2.AutoSizeTable = false;
-            materialListView2.BackColor = Color.FromArgb(255, 255, 255);
-            materialListView2.BorderStyle = BorderStyle.None;
-            materialListView2.Columns.AddRange(new ColumnHeader[] { columnHeader5, columnHeader6, columnHeader7, columnHeader8, columnHeader9, columnHeader10 });
-            materialListView2.Depth = 0;
-            materialListView2.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            materialListView2.FullRowSelect = true;
-            materialListView2.Location = new Point(33, 87);
-            materialListView2.MinimumSize = new Size(200, 100);
-            materialListView2.MouseLocation = new Point(-1, -1);
-            materialListView2.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.OUT;
-            materialListView2.Name = "materialListView2";
-            materialListView2.OwnerDraw = true;
-            materialListView2.Size = new Size(1205, 515);
-            materialListView2.TabIndex = 47;
-            materialListView2.UseCompatibleStateImageBehavior = false;
-            materialListView2.View = View.Details;
-            materialListView2.SelectedIndexChanged += materialListView2_SelectedIndexChanged;
-            materialListView2.DoubleClick += materialListView2_DoubleClick;
-            // 
-            // columnHeader5
-            // 
-            columnHeader5.Text = "IP地址";
-            columnHeader5.Width = 200;
-            // 
-            // columnHeader6
-            // 
-            columnHeader6.Text = "ID";
-            columnHeader6.Width = 200;
-            // 
-            // columnHeader7
-            // 
-            columnHeader7.Text = "系统名称";
-            columnHeader7.Width = 200;
-            // 
-            // columnHeader8
-            // 
-            columnHeader8.Text = "是否可用";
-            columnHeader8.Width = 200;
-            // 
-            // columnHeader9
-            // 
-            columnHeader9.Text = "控制器名称";
-            columnHeader9.Width = 200;
-            // 
-            // columnHeader10
-            // 
-            columnHeader10.Text = "控制器版本";
-            columnHeader10.Width = 200;
             // 
             // materialLabel76
             // 
@@ -580,7 +581,7 @@ namespace ReaLTaiizor.UI
             materialCard8.Controls.Add(materialButton26);
             materialCard8.Controls.Add(materialButton25);
             materialCard8.Controls.Add(materialLabel6);
-            materialCard8.Controls.Add(materialComboBox12);
+            materialCard8.Controls.Add(comboBox_Restart);
             materialCard8.Controls.Add(label_Operate);
             materialCard8.Controls.Add(materialButton3);
             materialCard8.Depth = 0;
@@ -590,8 +591,9 @@ namespace ReaLTaiizor.UI
             materialCard8.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard8.Name = "materialCard8";
             materialCard8.Padding = new Padding(14);
-            materialCard8.Size = new Size(564, 1085);
+            materialCard8.Size = new Size(638, 1085);
             materialCard8.TabIndex = 62;
+            materialCard8.Paint += materialCard8_Paint;
             // 
             // materialButton8
             // 
@@ -688,11 +690,12 @@ namespace ReaLTaiizor.UI
             // 
             label_Status.AutoSize = true;
             label_Status.Depth = 0;
-            label_Status.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            label_Status.Location = new Point(392, 317);
+            label_Status.Font = new Font("Roboto", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
+            label_Status.FontType = Manager.MaterialSkinManager.FontType.H5;
+            label_Status.Location = new Point(335, 324);
             label_Status.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             label_Status.Name = "label_Status";
-            label_Status.Size = new Size(116, 19);
+            label_Status.Size = new Size(173, 29);
             label_Status.TabIndex = 53;
             label_Status.Text = "materialLabel60";
             label_Status.Click += materialLabel60_Click;
@@ -772,11 +775,12 @@ namespace ReaLTaiizor.UI
             // 
             label_State.AutoSize = true;
             label_State.Depth = 0;
-            label_State.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            label_State.Location = new Point(392, 148);
+            label_State.Font = new Font("Roboto", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
+            label_State.FontType = Manager.MaterialSkinManager.FontType.H5;
+            label_State.Location = new Point(335, 155);
             label_State.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             label_State.Name = "label_State";
-            label_State.Size = new Size(116, 19);
+            label_State.Size = new Size(173, 29);
             label_State.TabIndex = 52;
             label_State.Text = "materialLabel57";
             // 
@@ -840,37 +844,40 @@ namespace ReaLTaiizor.UI
             materialLabel6.TextAlign = ContentAlignment.MiddleCenter;
             materialLabel6.Click += materialLabel6_Click_1;
             // 
-            // materialComboBox12
+            // comboBox_Restart
             // 
-            materialComboBox12.AutoResize = false;
-            materialComboBox12.BackColor = Color.FromArgb(255, 255, 255);
-            materialComboBox12.Depth = 0;
-            materialComboBox12.DrawMode = DrawMode.OwnerDrawVariable;
-            materialComboBox12.DropDownHeight = 174;
-            materialComboBox12.DropDownStyle = ComboBoxStyle.DropDownList;
-            materialComboBox12.DropDownWidth = 121;
-            materialComboBox12.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
-            materialComboBox12.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialComboBox12.FormattingEnabled = true;
-            materialComboBox12.IntegralHeight = false;
-            materialComboBox12.ItemHeight = 43;
-            materialComboBox12.Location = new Point(68, 987);
-            materialComboBox12.MaxDropDownItems = 4;
-            materialComboBox12.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.OUT;
-            materialComboBox12.Name = "materialComboBox12";
-            materialComboBox12.Size = new Size(227, 49);
-            materialComboBox12.StartIndex = 0;
-            materialComboBox12.TabIndex = 61;
+            comboBox_Restart.AutoResize = false;
+            comboBox_Restart.BackColor = Color.FromArgb(255, 255, 255);
+            comboBox_Restart.Depth = 0;
+            comboBox_Restart.DrawMode = DrawMode.OwnerDrawVariable;
+            comboBox_Restart.DropDownHeight = 174;
+            comboBox_Restart.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox_Restart.DropDownWidth = 121;
+            comboBox_Restart.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
+            comboBox_Restart.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            comboBox_Restart.FormattingEnabled = true;
+            comboBox_Restart.IntegralHeight = false;
+            comboBox_Restart.ItemHeight = 43;
+            comboBox_Restart.Items.AddRange(new object[] { "Warm", "Cold", "PStart", "IStart", "XStart", "SStart", "BStart" });
+            comboBox_Restart.Location = new Point(68, 987);
+            comboBox_Restart.MaxDropDownItems = 4;
+            comboBox_Restart.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            comboBox_Restart.Name = "comboBox_Restart";
+            comboBox_Restart.Size = new Size(227, 49);
+            comboBox_Restart.StartIndex = 0;
+            comboBox_Restart.TabIndex = 61;
+            comboBox_Restart.SelectedIndexChanged += materialComboBox12_SelectedIndexChanged;
             // 
             // label_Operate
             // 
             label_Operate.AutoSize = true;
             label_Operate.Depth = 0;
-            label_Operate.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            label_Operate.Location = new Point(112, 85);
+            label_Operate.Font = new Font("Roboto", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
+            label_Operate.FontType = Manager.MaterialSkinManager.FontType.H5;
+            label_Operate.Location = new Point(79, 78);
             label_Operate.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             label_Operate.Name = "label_Operate";
-            label_Operate.Size = new Size(116, 19);
+            label_Operate.Size = new Size(173, 29);
             label_Operate.TabIndex = 51;
             label_Operate.Text = "materialLabel53";
             // 
@@ -944,8 +951,9 @@ namespace ReaLTaiizor.UI
             materialTabControl1.Multiline = true;
             materialTabControl1.Name = "materialTabControl1";
             materialTabControl1.SelectedIndex = 0;
-            materialTabControl1.Size = new Size(1958, 1403);
+            materialTabControl1.Size = new Size(2025, 1198);
             materialTabControl1.TabIndex = 18;
+            materialTabControl1.SelectedIndexChanged += materialTabControl1_SelectedIndexChanged;
             // 
             // tabPage13
             // 
@@ -956,7 +964,7 @@ namespace ReaLTaiizor.UI
             tabPage13.ImageKey = "round_bookmark_white_24dp.png";
             tabPage13.Location = new Point(4, 33);
             tabPage13.Name = "tabPage13";
-            tabPage13.Size = new Size(1950, 1366);
+            tabPage13.Size = new Size(2017, 1161);
             tabPage13.TabIndex = 10;
             tabPage13.Text = "变量与IO";
             tabPage13.UseVisualStyleBackColor = true;
@@ -1095,6 +1103,8 @@ namespace ReaLTaiizor.UI
             // materialCard5
             // 
             materialCard5.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard5.Controls.Add(materialLabel2);
+            materialCard5.Controls.Add(txtShowRdQ4);
             materialCard5.Controls.Add(materialLabel83);
             materialCard5.Controls.Add(txtShowRdQ3);
             materialCard5.Controls.Add(txtShowRdQ2);
@@ -1126,6 +1136,44 @@ namespace ReaLTaiizor.UI
             materialCard5.Padding = new Padding(14);
             materialCard5.Size = new Size(1705, 501);
             materialCard5.TabIndex = 0;
+            materialCard5.Paint += materialCard5_Paint;
+            // 
+            // materialLabel2
+            // 
+            materialLabel2.Depth = 0;
+            materialLabel2.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel2.Location = new Point(1439, 259);
+            materialLabel2.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel2.Name = "materialLabel2";
+            materialLabel2.Size = new Size(38, 19);
+            materialLabel2.TabIndex = 61;
+            materialLabel2.Text = "Q4：";
+            materialLabel2.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // txtShowRdQ4
+            // 
+            txtShowRdQ4.AnimateReadOnly = false;
+            txtShowRdQ4.BackgroundImageLayout = ImageLayout.None;
+            txtShowRdQ4.CharacterCasing = CharacterCasing.Normal;
+            txtShowRdQ4.Depth = 0;
+            txtShowRdQ4.HideSelection = true;
+            txtShowRdQ4.Location = new Point(1493, 244);
+            txtShowRdQ4.MaxLength = 32767;
+            txtShowRdQ4.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            txtShowRdQ4.Name = "txtShowRdQ4";
+            txtShowRdQ4.PasswordChar = '\0';
+            txtShowRdQ4.ReadOnly = false;
+            txtShowRdQ4.ScrollBars = ScrollBars.None;
+            txtShowRdQ4.SelectedText = "";
+            txtShowRdQ4.SelectionLength = 0;
+            txtShowRdQ4.SelectionStart = 0;
+            txtShowRdQ4.ShortcutsEnabled = true;
+            txtShowRdQ4.Size = new Size(119, 57);
+            txtShowRdQ4.TabIndex = 60;
+            txtShowRdQ4.TabStop = false;
+            txtShowRdQ4.Text = "materialMultiLineTextBoxEdit10";
+            txtShowRdQ4.TextAlign = HorizontalAlignment.Left;
+            txtShowRdQ4.UseSystemPasswordChar = false;
             // 
             // materialLabel83
             // 
@@ -1148,7 +1196,7 @@ namespace ReaLTaiizor.UI
             txtShowRdQ3.CharacterCasing = CharacterCasing.Normal;
             txtShowRdQ3.Depth = 0;
             txtShowRdQ3.HideSelection = true;
-            txtShowRdQ3.Location = new Point(1271, 419);
+            txtShowRdQ3.Location = new Point(1493, 172);
             txtShowRdQ3.MaxLength = 32767;
             txtShowRdQ3.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             txtShowRdQ3.Name = "txtShowRdQ3";
@@ -1173,7 +1221,7 @@ namespace ReaLTaiizor.UI
             txtShowRdQ2.CharacterCasing = CharacterCasing.Normal;
             txtShowRdQ2.Depth = 0;
             txtShowRdQ2.HideSelection = true;
-            txtShowRdQ2.Location = new Point(1271, 344);
+            txtShowRdQ2.Location = new Point(1493, 97);
             txtShowRdQ2.MaxLength = 32767;
             txtShowRdQ2.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             txtShowRdQ2.Name = "txtShowRdQ2";
@@ -1198,7 +1246,7 @@ namespace ReaLTaiizor.UI
             txtShowRdQ1.CharacterCasing = CharacterCasing.Normal;
             txtShowRdQ1.Depth = 0;
             txtShowRdQ1.HideSelection = true;
-            txtShowRdQ1.Location = new Point(1271, 271);
+            txtShowRdQ1.Location = new Point(1493, 24);
             txtShowRdQ1.MaxLength = 32767;
             txtShowRdQ1.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             txtShowRdQ1.Name = "txtShowRdQ1";
@@ -1295,7 +1343,7 @@ namespace ReaLTaiizor.UI
             // 
             materialLabel68.Depth = 0;
             materialLabel68.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel68.Location = new Point(1217, 428);
+            materialLabel68.Location = new Point(1439, 181);
             materialLabel68.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel68.Name = "materialLabel68";
             materialLabel68.Size = new Size(38, 19);
@@ -1307,7 +1355,7 @@ namespace ReaLTaiizor.UI
             // 
             materialLabel67.Depth = 0;
             materialLabel67.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel67.Location = new Point(1217, 357);
+            materialLabel67.Location = new Point(1439, 110);
             materialLabel67.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel67.Name = "materialLabel67";
             materialLabel67.Size = new Size(38, 19);
@@ -1319,7 +1367,7 @@ namespace ReaLTaiizor.UI
             // 
             materialLabel66.Depth = 0;
             materialLabel66.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel66.Location = new Point(1217, 289);
+            materialLabel66.Location = new Point(1439, 42);
             materialLabel66.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel66.Name = "materialLabel66";
             materialLabel66.Size = new Size(38, 19);
@@ -1548,12 +1596,12 @@ namespace ReaLTaiizor.UI
             // materialCard11
             // 
             materialCard11.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard11.Controls.Add(listView3);
+            materialCard11.Controls.Add(listView2);
             materialCard11.Controls.Add(textBox_Sub_IO);
             materialCard11.Controls.Add(materialButton5);
             materialCard11.Controls.Add(materialButton2);
             materialCard11.Controls.Add(materialLabel85);
-            materialCard11.Controls.Add(listView2);
-            materialCard11.Controls.Add(listView3);
             materialCard11.Depth = 0;
             materialCard11.ForeColor = Color.FromArgb(222, 0, 0, 0);
             materialCard11.Location = new Point(555, 534);
@@ -1563,6 +1611,76 @@ namespace ReaLTaiizor.UI
             materialCard11.Padding = new Padding(14);
             materialCard11.Size = new Size(1190, 984);
             materialCard11.TabIndex = 62;
+            // 
+            // listView3
+            // 
+            listView3.Columns.AddRange(new ColumnHeader[] { columnHeader8, columnHeader9, columnHeader10, columnHeader11 });
+            listView3.Font = new Font("Segoe UI", 12F);
+            listView3.FullRowSelect = true;
+            listView3.HideSelection = true;
+            listView3.Location = new Point(683, 24);
+            listView3.Name = "listView3";
+            listView3.OwnerDraw = true;
+            listView3.Size = new Size(372, 813);
+            listView3.TabIndex = 66;
+            listView3.UseCompatibleStateImageBehavior = false;
+            listView3.UseSelectable = true;
+            listView3.View = View.Details;
+            // 
+            // columnHeader8
+            // 
+            columnHeader8.Text = "名字";
+            columnHeader8.Width = 80;
+            // 
+            // columnHeader9
+            // 
+            columnHeader9.Text = "类型";
+            columnHeader9.Width = 80;
+            // 
+            // columnHeader10
+            // 
+            columnHeader10.Text = "值";
+            columnHeader10.Width = 80;
+            // 
+            // columnHeader11
+            // 
+            columnHeader11.Text = "所属设备";
+            columnHeader11.Width = 130;
+            // 
+            // listView2
+            // 
+            listView2.Columns.AddRange(new ColumnHeader[] { columnHeader4, columnHeader5, columnHeader6, columnHeader7 });
+            listView2.Font = new Font("Segoe UI", 12F);
+            listView2.FullRowSelect = true;
+            listView2.HideSelection = true;
+            listView2.Location = new Point(227, 24);
+            listView2.Name = "listView2";
+            listView2.OwnerDraw = true;
+            listView2.Size = new Size(372, 813);
+            listView2.TabIndex = 65;
+            listView2.UseCompatibleStateImageBehavior = false;
+            listView2.UseSelectable = true;
+            listView2.View = View.Details;
+            // 
+            // columnHeader4
+            // 
+            columnHeader4.Text = "名字";
+            columnHeader4.Width = 80;
+            // 
+            // columnHeader5
+            // 
+            columnHeader5.Text = "类型";
+            columnHeader5.Width = 80;
+            // 
+            // columnHeader6
+            // 
+            columnHeader6.Text = "值";
+            columnHeader6.Width = 80;
+            // 
+            // columnHeader7
+            // 
+            columnHeader7.Text = "所属设备";
+            columnHeader7.Width = 130;
             // 
             // textBox_Sub_IO
             // 
@@ -1647,87 +1765,9 @@ namespace ReaLTaiizor.UI
             materialLabel85.Text = "读取板卡IO";
             materialLabel85.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // listView2
-            // 
-            listView2.AutoSizeTable = false;
-            listView2.BackColor = Color.FromArgb(255, 255, 255);
-            listView2.BorderStyle = BorderStyle.None;
-            listView2.Columns.AddRange(new ColumnHeader[] { columnHeader11, columnHeader12, columnHeader13, columnHeader14 });
-            listView2.Depth = 0;
-            listView2.FullRowSelect = true;
-            listView2.Location = new Point(240, 24);
-            listView2.MinimumSize = new Size(200, 100);
-            listView2.MouseLocation = new Point(-1, -1);
-            listView2.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.OUT;
-            listView2.Name = "listView2";
-            listView2.OwnerDraw = true;
-            listView2.Size = new Size(368, 815);
-            listView2.TabIndex = 22;
-            listView2.UseCompatibleStateImageBehavior = false;
-            listView2.View = View.Details;
-            // 
-            // columnHeader11
-            // 
-            columnHeader11.Text = "名字";
-            columnHeader11.Width = 70;
-            // 
-            // columnHeader12
-            // 
-            columnHeader12.Text = "类型";
-            columnHeader12.Width = 70;
-            // 
-            // columnHeader13
-            // 
-            columnHeader13.Text = "值";
-            columnHeader13.Width = 70;
-            // 
-            // columnHeader14
-            // 
-            columnHeader14.Text = "所属设备";
-            columnHeader14.Width = 90;
-            // 
-            // listView3
-            // 
-            listView3.AutoSizeTable = false;
-            listView3.BackColor = Color.FromArgb(255, 255, 255);
-            listView3.BorderStyle = BorderStyle.None;
-            listView3.Columns.AddRange(new ColumnHeader[] { columnHeader15, columnHeader16, columnHeader17, columnHeader18 });
-            listView3.Depth = 0;
-            listView3.ForeColor = Color.Black;
-            listView3.FullRowSelect = true;
-            listView3.Location = new Point(687, 24);
-            listView3.MinimumSize = new Size(200, 100);
-            listView3.MouseLocation = new Point(-1, -1);
-            listView3.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.OUT;
-            listView3.Name = "listView3";
-            listView3.OwnerDraw = true;
-            listView3.Size = new Size(368, 815);
-            listView3.TabIndex = 23;
-            listView3.UseCompatibleStateImageBehavior = false;
-            listView3.View = View.Details;
-            // 
-            // columnHeader15
-            // 
-            columnHeader15.Text = "名字";
-            columnHeader15.Width = 70;
-            // 
-            // columnHeader16
-            // 
-            columnHeader16.Text = "类型";
-            columnHeader16.Width = 70;
-            // 
-            // columnHeader17
-            // 
-            columnHeader17.Text = "值";
-            columnHeader17.Width = 70;
-            // 
-            // columnHeader18
-            // 
-            columnHeader18.Text = "所属设备";
-            columnHeader18.Width = 90;
-            // 
             // tabPage14
             // 
+            tabPage14.AutoScroll = true;
             tabPage14.Controls.Add(textBox9);
             tabPage14.Controls.Add(materialButton46);
             tabPage14.Controls.Add(materialButton47);
@@ -1767,7 +1807,7 @@ namespace ReaLTaiizor.UI
             tabPage14.ImageKey = "round_build_white_24dp.png";
             tabPage14.Location = new Point(4, 33);
             tabPage14.Name = "tabPage14";
-            tabPage14.Size = new Size(1950, 1366);
+            tabPage14.Size = new Size(2017, 1161);
             tabPage14.TabIndex = 11;
             tabPage14.Text = "机器人控制";
             tabPage14.UseVisualStyleBackColor = true;
@@ -2338,9 +2378,7 @@ namespace ReaLTaiizor.UI
             // radioButton_User
             // 
             radioButton_User.AutoSize = true;
-            radioButton_User.Checked = true;
             radioButton_User.Depth = 0;
-            radioButton_User.Enabled = false;
             radioButton_User.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             radioButton_User.Location = new Point(592, 216);
             radioButton_User.Margin = new Padding(0);
@@ -2359,9 +2397,7 @@ namespace ReaLTaiizor.UI
             // radioButton_WorkProject
             // 
             radioButton_WorkProject.AutoSize = true;
-            radioButton_WorkProject.Checked = true;
             radioButton_WorkProject.Depth = 0;
-            radioButton_WorkProject.Enabled = false;
             radioButton_WorkProject.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             radioButton_WorkProject.Location = new Point(592, 118);
             radioButton_WorkProject.Margin = new Padding(0);
@@ -2380,9 +2416,7 @@ namespace ReaLTaiizor.UI
             // radioButton_Tool
             // 
             radioButton_Tool.AutoSize = true;
-            radioButton_Tool.Checked = true;
             radioButton_Tool.Depth = 0;
-            radioButton_Tool.Enabled = false;
             radioButton_Tool.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             radioButton_Tool.Location = new Point(319, 216);
             radioButton_Tool.Margin = new Padding(0);
@@ -2400,10 +2434,7 @@ namespace ReaLTaiizor.UI
             // 
             // radioButton_Base
             // 
-            radioButton_Base.AutoSize = true;
-            radioButton_Base.Checked = true;
             radioButton_Base.Depth = 0;
-            radioButton_Base.Enabled = false;
             radioButton_Base.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             radioButton_Base.Location = new Point(319, 118);
             radioButton_Base.Margin = new Padding(0);
@@ -2422,9 +2453,7 @@ namespace ReaLTaiizor.UI
             // radioButton_world
             // 
             radioButton_world.AutoSize = true;
-            radioButton_world.Checked = true;
             radioButton_world.Depth = 0;
-            radioButton_world.Enabled = false;
             radioButton_world.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             radioButton_world.Location = new Point(51, 216);
             radioButton_world.Margin = new Padding(0);
@@ -2443,9 +2472,7 @@ namespace ReaLTaiizor.UI
             // radioButton_guanjie
             // 
             radioButton_guanjie.AutoSize = true;
-            radioButton_guanjie.Checked = true;
             radioButton_guanjie.Depth = 0;
-            radioButton_guanjie.Enabled = false;
             radioButton_guanjie.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             radioButton_guanjie.Location = new Point(51, 118);
             radioButton_guanjie.Margin = new Padding(0);
@@ -2787,17 +2814,53 @@ namespace ReaLTaiizor.UI
             // 
             // tabPage15
             // 
+            tabPage15.AutoScroll = true;
+            tabPage15.Controls.Add(listView4);
             tabPage15.Controls.Add(materialButton50);
             tabPage15.Controls.Add(comboBox4);
             tabPage15.Controls.Add(materialLabel80);
-            tabPage15.Controls.Add(listView4);
             tabPage15.ImageKey = "round_event_black_24dp.png";
             tabPage15.Location = new Point(4, 33);
             tabPage15.Name = "tabPage15";
-            tabPage15.Size = new Size(1950, 1366);
+            tabPage15.Size = new Size(2017, 1161);
             tabPage15.TabIndex = 12;
             tabPage15.Text = "数据";
             tabPage15.UseVisualStyleBackColor = true;
+            // 
+            // listView4
+            // 
+            listView4.Columns.AddRange(new ColumnHeader[] { columnHeader23, columnHeader24, columnHeader25, columnHeader26 });
+            listView4.Font = new Font("Segoe UI", 12F);
+            listView4.FullRowSelect = true;
+            listView4.HideSelection = true;
+            listView4.Location = new Point(62, 66);
+            listView4.Name = "listView4";
+            listView4.OwnerDraw = true;
+            listView4.Size = new Size(1200, 980);
+            listView4.TabIndex = 27;
+            listView4.UseCompatibleStateImageBehavior = false;
+            listView4.UseSelectable = true;
+            listView4.View = View.Details;
+            // 
+            // columnHeader23
+            // 
+            columnHeader23.Text = "名字";
+            columnHeader23.Width = 300;
+            // 
+            // columnHeader24
+            // 
+            columnHeader24.Text = "存储类型";
+            columnHeader24.Width = 300;
+            // 
+            // columnHeader25
+            // 
+            columnHeader25.Text = "数据类型";
+            columnHeader25.Width = 300;
+            // 
+            // columnHeader26
+            // 
+            columnHeader26.Text = "值";
+            columnHeader26.Width = 300;
             // 
             // materialButton50
             // 
@@ -2835,6 +2898,7 @@ namespace ReaLTaiizor.UI
             comboBox4.FormattingEnabled = true;
             comboBox4.IntegralHeight = false;
             comboBox4.ItemHeight = 43;
+            comboBox4.Items.AddRange(new object[] { "robtarget", "num", "bool", "string", "pos", "orient", "jointtarget" });
             comboBox4.Location = new Point(1438, 213);
             comboBox4.MaxDropDownItems = 4;
             comboBox4.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.OUT;
@@ -2855,53 +2919,15 @@ namespace ReaLTaiizor.UI
             materialLabel80.TabIndex = 24;
             materialLabel80.Text = "数据类型：";
             // 
-            // listView4
-            // 
-            listView4.AutoSizeTable = false;
-            listView4.BackColor = Color.FromArgb(255, 255, 255);
-            listView4.BorderStyle = BorderStyle.None;
-            listView4.Columns.AddRange(new ColumnHeader[] { columnHeader19, columnHeader20, columnHeader21, columnHeader22 });
-            listView4.Depth = 0;
-            listView4.FullRowSelect = true;
-            listView4.Location = new Point(39, 44);
-            listView4.MinimumSize = new Size(200, 100);
-            listView4.MouseLocation = new Point(-1, -1);
-            listView4.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.OUT;
-            listView4.Name = "listView4";
-            listView4.OwnerDraw = true;
-            listView4.Size = new Size(1200, 980);
-            listView4.TabIndex = 23;
-            listView4.UseCompatibleStateImageBehavior = false;
-            listView4.View = View.Details;
-            // 
-            // columnHeader19
-            // 
-            columnHeader19.Text = "名字";
-            columnHeader19.Width = 300;
-            // 
-            // columnHeader20
-            // 
-            columnHeader20.Text = "存储类型";
-            columnHeader20.Width = 300;
-            // 
-            // columnHeader21
-            // 
-            columnHeader21.Text = "数据类型";
-            columnHeader21.Width = 300;
-            // 
-            // columnHeader22
-            // 
-            columnHeader22.Text = "值";
-            columnHeader22.Width = 300;
-            // 
             // tabPage16
             // 
+            tabPage16.AutoScroll = true;
             tabPage16.Controls.Add(materialButton62);
             tabPage16.Controls.Add(textBox_Log);
             tabPage16.ImageKey = "round_report_problem_white_24dp.png";
             tabPage16.Location = new Point(4, 33);
             tabPage16.Name = "tabPage16";
-            tabPage16.Size = new Size(1950, 1366);
+            tabPage16.Size = new Size(2017, 1161);
             tabPage16.TabIndex = 13;
             tabPage16.Text = "日志";
             tabPage16.UseVisualStyleBackColor = true;
@@ -2955,6 +2981,7 @@ namespace ReaLTaiizor.UI
             // 
             // tabPage17
             // 
+            tabPage17.AutoScroll = true;
             tabPage17.Controls.Add(materialButton55);
             tabPage17.Controls.Add(materialButton54);
             tabPage17.Controls.Add(comboBox_pgf);
@@ -2965,7 +2992,7 @@ namespace ReaLTaiizor.UI
             tabPage17.ImageKey = "round_backup_white_24dp.png";
             tabPage17.Location = new Point(4, 33);
             tabPage17.Name = "tabPage17";
-            tabPage17.Size = new Size(1950, 1366);
+            tabPage17.Size = new Size(2017, 1161);
             tabPage17.TabIndex = 14;
             tabPage17.Text = "文件";
             tabPage17.UseVisualStyleBackColor = true;
@@ -3182,6 +3209,7 @@ namespace ReaLTaiizor.UI
             // 
             // tabPage18
             // 
+            tabPage18.AutoScroll = true;
             tabPage18.Controls.Add(textBox_work);
             tabPage18.Controls.Add(textBox_Info);
             tabPage18.Controls.Add(materialButton59);
@@ -3189,7 +3217,7 @@ namespace ReaLTaiizor.UI
             tabPage18.ImageKey = "round_phone_black_24dp.png";
             tabPage18.Location = new Point(4, 33);
             tabPage18.Name = "tabPage18";
-            tabPage18.Size = new Size(1950, 1366);
+            tabPage18.Size = new Size(2017, 1161);
             tabPage18.TabIndex = 15;
             tabPage18.Text = "选项信息";
             tabPage18.UseVisualStyleBackColor = true;
@@ -3269,6 +3297,7 @@ namespace ReaLTaiizor.UI
             // 
             // tabPage19
             // 
+            tabPage19.AutoScroll = true;
             tabPage19.Controls.Add(materialLabel82);
             tabPage19.Controls.Add(materialButton60);
             tabPage19.Controls.Add(textBox_move);
@@ -3276,7 +3305,7 @@ namespace ReaLTaiizor.UI
             tabPage19.ImageKey = "round_gps_fixed_white_24dp.png";
             tabPage19.Location = new Point(4, 33);
             tabPage19.Name = "tabPage19";
-            tabPage19.Size = new Size(1950, 1366);
+            tabPage19.Size = new Size(2017, 1161);
             tabPage19.TabIndex = 16;
             tabPage19.Text = "运动";
             tabPage19.UseVisualStyleBackColor = true;
@@ -3358,12 +3387,13 @@ namespace ReaLTaiizor.UI
             // 
             // tabPage20
             // 
+            tabPage20.AutoScroll = true;
             tabPage20.Controls.Add(materialButton61);
             tabPage20.Controls.Add(textBox_Rapid);
             tabPage20.ImageKey = "round_swap_vert_white_24dp.png";
             tabPage20.Location = new Point(4, 33);
             tabPage20.Name = "tabPage20";
-            tabPage20.Size = new Size(1950, 1366);
+            tabPage20.Size = new Size(2017, 1161);
             tabPage20.TabIndex = 17;
             tabPage20.Text = "Rapid";
             tabPage20.UseVisualStyleBackColor = true;
@@ -3431,8 +3461,9 @@ namespace ReaLTaiizor.UI
             // 
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.White;
-            ClientSize = new Size(1970, 1527);
+            ClientSize = new Size(2037, 1322);
             ContextMenuStrip = materialContextMenuStrip1;
             Controls.Add(materialTabControl1);
             DrawerShowIconsWhenHidden = true;
@@ -3444,6 +3475,7 @@ namespace ReaLTaiizor.UI
             Padding = new Padding(6, 118, 6, 6);
             StartPosition = FormStartPosition.CenterScreen;
             Text = "工业ABB机器人控制平台——基于搭载TCP/IP网络技术的ABBSDK开发的ABB机器人远程监控与反馈Windows Forms应用系统";
+            Load += Form17_Load;
             materialContextMenuStrip1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
@@ -3494,12 +3526,6 @@ namespace ReaLTaiizor.UI
         private MaterialSwitch materialSwitch5;
         private MaterialSwitch materialSwitch4;
         private MaterialTabControl materialTabControl1;
-        private MaterialListView materialListView2;
-        private ColumnHeader columnHeader6;
-        private ColumnHeader columnHeader7;
-        private ColumnHeader columnHeader8;
-        private ColumnHeader columnHeader9;
-        private ColumnHeader columnHeader10;
         private MaterialLabel materialLabel52;
         private MaterialButton materialButton26;
         private MaterialButton materialButton25;
@@ -3568,7 +3594,6 @@ namespace ReaLTaiizor.UI
         private MaterialLabel materialLabel71;
         private MetroTextBox textBoxWrite_speed;
         private MaterialLabel materialLabel76;
-        public ColumnHeader columnHeader5;
         private MaterialLabel materialLabel6;
         private MaterialLabel materialLabel78;
         private MaterialLabel materialLabel79;
@@ -3582,8 +3607,6 @@ namespace ReaLTaiizor.UI
         private System.Windows.Forms.TabPage tabPage18;
         private System.Windows.Forms.TabPage tabPage19;
         private System.Windows.Forms.TabPage tabPage20;
-        private MaterialListView listView4;
-        private ColumnHeader columnHeader19;
         private ColumnHeader columnHeader20;
         private ColumnHeader columnHeader21;
         private ColumnHeader columnHeader22;
@@ -3622,7 +3645,7 @@ namespace ReaLTaiizor.UI
         private MaterialLabel materialLabel87;
         private MaterialLabel materialLabel88;
         private MaterialLabel materialLabel89;
-        private MaterialComboBox materialComboBox12;
+        private MaterialComboBox comboBox_Restart;
         private MaterialButton materialButton29;
         private MaterialButton materialButton1;
         private MaterialComboBox materialComboBox3;
@@ -3635,16 +3658,6 @@ namespace ReaLTaiizor.UI
         private MaterialButton materialButton32;
         private MaterialMultiLineTextBoxEdit textGetSig;
         private MaterialMultiLineTextBoxEdit textSigName;
-        private MaterialListView listView2;
-        private ColumnHeader columnHeader11;
-        private ColumnHeader columnHeader12;
-        private ColumnHeader columnHeader13;
-        private ColumnHeader columnHeader14;
-        private MaterialListView listView3;
-        private ColumnHeader columnHeader15;
-        private ColumnHeader columnHeader16;
-        private ColumnHeader columnHeader17;
-        private ColumnHeader columnHeader18;
         private MaterialCard materialCard11;
         private MaterialLabel materialLabel85;
         private MaterialButton materialButton5;
@@ -3658,5 +3671,29 @@ namespace ReaLTaiizor.UI
         private MaterialMultiLineTextBoxEdit materialMultiLineTextBoxEdit1;
         private MaterialRichTextBox textBox_Info;
         private MaterialRichTextBox textBox_work;
+        private PoisonListView materialListView2;
+        private ColumnHeader IP地址;
+        private ColumnHeader ID;
+        private ColumnHeader 系统名称;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
+        private ColumnHeader columnHeader3;
+        private PoisonListView listView2;
+        private ColumnHeader columnHeader4;
+        private ColumnHeader columnHeader5;
+        private ColumnHeader columnHeader6;
+        private ColumnHeader columnHeader7;
+        private PoisonListView listView3;
+        private ColumnHeader columnHeader8;
+        private ColumnHeader columnHeader9;
+        private ColumnHeader columnHeader10;
+        private ColumnHeader columnHeader11;
+        private PoisonListView listView4;
+        private ColumnHeader columnHeader23;
+        private ColumnHeader columnHeader24;
+        private ColumnHeader columnHeader25;
+        private ColumnHeader columnHeader26;
+        private MaterialLabel materialLabel2;
+        private MaterialMultiLineTextBoxEdit txtShowRdQ4;
     }
 }
