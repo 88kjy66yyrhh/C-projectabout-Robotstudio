@@ -172,14 +172,15 @@ namespace ReaLTaiizor.UI
             materialButton48 = new MaterialButton();
             materialScrollBar1 = new MaterialScrollBar();
             materialCard2 = new MaterialCard();
+            button13 = new System.Windows.Forms.Button();
             materialMultiLineTextBoxEdit1 = new MaterialMultiLineTextBoxEdit();
             materialLabel86 = new MaterialLabel();
             materialCard4 = new MaterialCard();
+            TP_write = new Label();
+            textBox_TP_ReadNum = new MaterialMultiLineTextBoxEdit();
             materialLabel89 = new MaterialLabel();
             materialLabel79 = new MaterialLabel();
             materialButton49 = new MaterialButton();
-            textBox_TpWrite = new MetroTextBox();
-            textBox_TP_ReadNum = new MetroTextBox();
             tabPage15 = new System.Windows.Forms.TabPage();
             listView4 = new PoisonListView();
             columnHeader23 = new ColumnHeader();
@@ -345,7 +346,7 @@ namespace ReaLTaiizor.UI
             tabPage1.Location = new Point(4, 33);
             tabPage1.Margin = new Padding(6);
             tabPage1.Name = "tabPage1";
-            tabPage1.Size = new Size(2017, 1161);
+            tabPage1.Size = new Size(2017, 1415);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "主页";
             tabPage1.Click += MaterialButton29_Click;
@@ -951,7 +952,7 @@ namespace ReaLTaiizor.UI
             materialTabControl1.Multiline = true;
             materialTabControl1.Name = "materialTabControl1";
             materialTabControl1.SelectedIndex = 0;
-            materialTabControl1.Size = new Size(2025, 1198);
+            materialTabControl1.Size = new Size(2025, 1452);
             materialTabControl1.TabIndex = 18;
             materialTabControl1.SelectedIndexChanged += materialTabControl1_SelectedIndexChanged;
             // 
@@ -964,7 +965,7 @@ namespace ReaLTaiizor.UI
             tabPage13.ImageKey = "round_bookmark_white_24dp.png";
             tabPage13.Location = new Point(4, 33);
             tabPage13.Name = "tabPage13";
-            tabPage13.Size = new Size(2017, 1161);
+            tabPage13.Size = new Size(2017, 1415);
             tabPage13.TabIndex = 10;
             tabPage13.Text = "变量与IO";
             tabPage13.UseVisualStyleBackColor = true;
@@ -1807,7 +1808,7 @@ namespace ReaLTaiizor.UI
             tabPage14.ImageKey = "round_build_white_24dp.png";
             tabPage14.Location = new Point(4, 33);
             tabPage14.Name = "tabPage14";
-            tabPage14.Size = new Size(2017, 1161);
+            tabPage14.Size = new Size(2017, 1415);
             tabPage14.TabIndex = 11;
             tabPage14.Text = "机器人控制";
             tabPage14.UseVisualStyleBackColor = true;
@@ -2392,6 +2393,7 @@ namespace ReaLTaiizor.UI
             radioButton_User.Text = "用户坐标系";
             radioButton_User.UseAccentColor = false;
             radioButton_User.UseVisualStyleBackColor = true;
+            radioButton_User.Visible = false;
             radioButton_User.Click += materialRadioButton3_Click;
             // 
             // radioButton_WorkProject
@@ -2430,6 +2432,7 @@ namespace ReaLTaiizor.UI
             radioButton_Tool.Text = "工具坐标系";
             radioButton_Tool.UseAccentColor = false;
             radioButton_Tool.UseVisualStyleBackColor = true;
+            radioButton_Tool.Visible = false;
             radioButton_Tool.Click += materialRadioButton3_Click;
             // 
             // radioButton_Base
@@ -2636,6 +2639,7 @@ namespace ReaLTaiizor.UI
             // materialCard2
             // 
             materialCard2.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard2.Controls.Add(button13);
             materialCard2.Controls.Add(materialMultiLineTextBoxEdit1);
             materialCard2.Controls.Add(materialLabel86);
             materialCard2.Depth = 0;
@@ -2647,6 +2651,19 @@ namespace ReaLTaiizor.UI
             materialCard2.Padding = new Padding(14);
             materialCard2.Size = new Size(1708, 696);
             materialCard2.TabIndex = 55;
+            // 
+            // button13
+            // 
+            button13.BackColor = Color.DodgerBlue;
+            button13.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            button13.ForeColor = Color.White;
+            button13.Location = new Point(1348, 531);
+            button13.Name = "button13";
+            button13.Size = new Size(213, 103);
+            button13.TabIndex = 64;
+            button13.Text = "点按";
+            button13.UseVisualStyleBackColor = false;
+            button13.Click += button13_Click;
             // 
             // materialMultiLineTextBoxEdit1
             // 
@@ -2690,11 +2707,11 @@ namespace ReaLTaiizor.UI
             // materialCard4
             // 
             materialCard4.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard4.Controls.Add(TP_write);
+            materialCard4.Controls.Add(textBox_TP_ReadNum);
             materialCard4.Controls.Add(materialLabel89);
             materialCard4.Controls.Add(materialLabel79);
             materialCard4.Controls.Add(materialButton49);
-            materialCard4.Controls.Add(textBox_TpWrite);
-            materialCard4.Controls.Add(textBox_TP_ReadNum);
             materialCard4.Depth = 0;
             materialCard4.ForeColor = Color.FromArgb(222, 0, 0, 0);
             materialCard4.Location = new Point(34, 996);
@@ -2702,8 +2719,43 @@ namespace ReaLTaiizor.UI
             materialCard4.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard4.Name = "materialCard4";
             materialCard4.Padding = new Padding(14);
-            materialCard4.Size = new Size(1708, 239);
+            materialCard4.Size = new Size(1708, 346);
             materialCard4.TabIndex = 57;
+            // 
+            // TP_write
+            // 
+            TP_write.Location = new Point(285, 133);
+            TP_write.Name = "TP_write";
+            TP_write.Size = new Size(235, 147);
+            TP_write.TabIndex = 65;
+            TP_write.Text = "label1";
+            TP_write.Click += TP_write_Click;
+            // 
+            // textBox_TP_ReadNum
+            // 
+            textBox_TP_ReadNum.AnimateReadOnly = false;
+            textBox_TP_ReadNum.BackgroundImageLayout = ImageLayout.None;
+            textBox_TP_ReadNum.CharacterCasing = CharacterCasing.Normal;
+            textBox_TP_ReadNum.Depth = 0;
+            textBox_TP_ReadNum.Font = new Font("Microsoft YaHei UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            textBox_TP_ReadNum.HideSelection = true;
+            textBox_TP_ReadNum.Location = new Point(618, 133);
+            textBox_TP_ReadNum.MaxLength = 32767;
+            textBox_TP_ReadNum.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            textBox_TP_ReadNum.Name = "textBox_TP_ReadNum";
+            textBox_TP_ReadNum.PasswordChar = '\0';
+            textBox_TP_ReadNum.ReadOnly = false;
+            textBox_TP_ReadNum.ScrollBars = ScrollBars.None;
+            textBox_TP_ReadNum.SelectedText = "";
+            textBox_TP_ReadNum.SelectionLength = 0;
+            textBox_TP_ReadNum.SelectionStart = 0;
+            textBox_TP_ReadNum.ShortcutsEnabled = true;
+            textBox_TP_ReadNum.Size = new Size(303, 147);
+            textBox_TP_ReadNum.TabIndex = 58;
+            textBox_TP_ReadNum.TabStop = false;
+            textBox_TP_ReadNum.Text = "materialMultiLineTextBoxEdit18";
+            textBox_TP_ReadNum.TextAlign = HorizontalAlignment.Left;
+            textBox_TP_ReadNum.UseSystemPasswordChar = false;
             // 
             // materialLabel89
             // 
@@ -2711,7 +2763,7 @@ namespace ReaLTaiizor.UI
             materialLabel89.Depth = 0;
             materialLabel89.Font = new Font("Roboto", 34F, FontStyle.Bold, GraphicsUnit.Pixel);
             materialLabel89.FontType = Manager.MaterialSkinManager.FontType.H4;
-            materialLabel89.Location = new Point(17, 14);
+            materialLabel89.Location = new Point(17, 68);
             materialLabel89.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel89.Name = "materialLabel89";
             materialLabel89.Size = new Size(78, 42);
@@ -2724,12 +2776,13 @@ namespace ReaLTaiizor.UI
             materialLabel79.AutoSize = true;
             materialLabel79.Depth = 0;
             materialLabel79.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel79.Location = new Point(78, 78);
+            materialLabel79.Location = new Point(346, 69);
             materialLabel79.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel79.Name = "materialLabel79";
             materialLabel79.Size = new Size(54, 19);
             materialLabel79.TabIndex = 52;
             materialLabel79.Text = "Tpwrite";
+            materialLabel79.Visible = false;
             // 
             // materialButton49
             // 
@@ -2739,7 +2792,7 @@ namespace ReaLTaiizor.UI
             materialButton49.HighEmphasis = true;
             materialButton49.Icon = null;
             materialButton49.IconType = MaterialButton.MaterialIconType.Rebase;
-            materialButton49.Location = new Point(348, 183);
+            materialButton49.Location = new Point(658, 57);
             materialButton49.Margin = new Padding(4, 6, 4, 6);
             materialButton49.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialButton49.Name = "materialButton49";
@@ -2752,66 +2805,6 @@ namespace ReaLTaiizor.UI
             materialButton49.UseVisualStyleBackColor = true;
             materialButton49.Click += materialButton49_Click;
             // 
-            // textBox_TpWrite
-            // 
-            textBox_TpWrite.AutoCompleteCustomSource = null;
-            textBox_TpWrite.AutoCompleteMode = AutoCompleteMode.None;
-            textBox_TpWrite.AutoCompleteSource = AutoCompleteSource.None;
-            textBox_TpWrite.BorderColor = Color.FromArgb(155, 155, 155);
-            textBox_TpWrite.DisabledBackColor = Color.FromArgb(204, 204, 204);
-            textBox_TpWrite.DisabledBorderColor = Color.FromArgb(155, 155, 155);
-            textBox_TpWrite.DisabledForeColor = Color.FromArgb(136, 136, 136);
-            textBox_TpWrite.Font = new Font("Microsoft Sans Serif", 10F);
-            textBox_TpWrite.HoverColor = Color.FromArgb(102, 102, 102);
-            textBox_TpWrite.Image = null;
-            textBox_TpWrite.IsDerivedStyle = true;
-            textBox_TpWrite.Lines = null;
-            textBox_TpWrite.Location = new Point(51, 110);
-            textBox_TpWrite.MaxLength = 32767;
-            textBox_TpWrite.Multiline = false;
-            textBox_TpWrite.Name = "textBox_TpWrite";
-            textBox_TpWrite.ReadOnly = false;
-            textBox_TpWrite.Size = new Size(126, 64);
-            textBox_TpWrite.Style = Enum.Metro.Style.Light;
-            textBox_TpWrite.StyleManager = null;
-            textBox_TpWrite.TabIndex = 49;
-            textBox_TpWrite.Text = "metroTextBox2";
-            textBox_TpWrite.TextAlign = HorizontalAlignment.Left;
-            textBox_TpWrite.ThemeAuthor = "Taiizor";
-            textBox_TpWrite.ThemeName = "MetroLight";
-            textBox_TpWrite.UseSystemPasswordChar = false;
-            textBox_TpWrite.WatermarkText = "";
-            // 
-            // textBox_TP_ReadNum
-            // 
-            textBox_TP_ReadNum.AutoCompleteCustomSource = null;
-            textBox_TP_ReadNum.AutoCompleteMode = AutoCompleteMode.None;
-            textBox_TP_ReadNum.AutoCompleteSource = AutoCompleteSource.None;
-            textBox_TP_ReadNum.BorderColor = Color.FromArgb(155, 155, 155);
-            textBox_TP_ReadNum.DisabledBackColor = Color.FromArgb(204, 204, 204);
-            textBox_TP_ReadNum.DisabledBorderColor = Color.FromArgb(155, 155, 155);
-            textBox_TP_ReadNum.DisabledForeColor = Color.FromArgb(136, 136, 136);
-            textBox_TP_ReadNum.Font = new Font("Microsoft Sans Serif", 10F);
-            textBox_TP_ReadNum.HoverColor = Color.FromArgb(102, 102, 102);
-            textBox_TP_ReadNum.Image = null;
-            textBox_TP_ReadNum.IsDerivedStyle = true;
-            textBox_TP_ReadNum.Lines = null;
-            textBox_TP_ReadNum.Location = new Point(345, 110);
-            textBox_TP_ReadNum.MaxLength = 32767;
-            textBox_TP_ReadNum.Multiline = false;
-            textBox_TP_ReadNum.Name = "textBox_TP_ReadNum";
-            textBox_TP_ReadNum.ReadOnly = false;
-            textBox_TP_ReadNum.Size = new Size(126, 64);
-            textBox_TP_ReadNum.Style = Enum.Metro.Style.Light;
-            textBox_TP_ReadNum.StyleManager = null;
-            textBox_TP_ReadNum.TabIndex = 50;
-            textBox_TP_ReadNum.Text = "metroTextBox3";
-            textBox_TP_ReadNum.TextAlign = HorizontalAlignment.Left;
-            textBox_TP_ReadNum.ThemeAuthor = "Taiizor";
-            textBox_TP_ReadNum.ThemeName = "MetroLight";
-            textBox_TP_ReadNum.UseSystemPasswordChar = false;
-            textBox_TP_ReadNum.WatermarkText = "";
-            // 
             // tabPage15
             // 
             tabPage15.AutoScroll = true;
@@ -2822,7 +2815,7 @@ namespace ReaLTaiizor.UI
             tabPage15.ImageKey = "round_event_black_24dp.png";
             tabPage15.Location = new Point(4, 33);
             tabPage15.Name = "tabPage15";
-            tabPage15.Size = new Size(2017, 1161);
+            tabPage15.Size = new Size(2017, 1415);
             tabPage15.TabIndex = 12;
             tabPage15.Text = "数据";
             tabPage15.UseVisualStyleBackColor = true;
@@ -2927,7 +2920,7 @@ namespace ReaLTaiizor.UI
             tabPage16.ImageKey = "round_report_problem_white_24dp.png";
             tabPage16.Location = new Point(4, 33);
             tabPage16.Name = "tabPage16";
-            tabPage16.Size = new Size(2017, 1161);
+            tabPage16.Size = new Size(2017, 1415);
             tabPage16.TabIndex = 13;
             tabPage16.Text = "日志";
             tabPage16.UseVisualStyleBackColor = true;
@@ -2992,7 +2985,7 @@ namespace ReaLTaiizor.UI
             tabPage17.ImageKey = "round_backup_white_24dp.png";
             tabPage17.Location = new Point(4, 33);
             tabPage17.Name = "tabPage17";
-            tabPage17.Size = new Size(2017, 1161);
+            tabPage17.Size = new Size(2017, 1415);
             tabPage17.TabIndex = 14;
             tabPage17.Text = "文件";
             tabPage17.UseVisualStyleBackColor = true;
@@ -3217,7 +3210,7 @@ namespace ReaLTaiizor.UI
             tabPage18.ImageKey = "round_phone_black_24dp.png";
             tabPage18.Location = new Point(4, 33);
             tabPage18.Name = "tabPage18";
-            tabPage18.Size = new Size(2017, 1161);
+            tabPage18.Size = new Size(2017, 1415);
             tabPage18.TabIndex = 15;
             tabPage18.Text = "选项信息";
             tabPage18.UseVisualStyleBackColor = true;
@@ -3305,7 +3298,7 @@ namespace ReaLTaiizor.UI
             tabPage19.ImageKey = "round_gps_fixed_white_24dp.png";
             tabPage19.Location = new Point(4, 33);
             tabPage19.Name = "tabPage19";
-            tabPage19.Size = new Size(2017, 1161);
+            tabPage19.Size = new Size(2017, 1415);
             tabPage19.TabIndex = 16;
             tabPage19.Text = "运动";
             tabPage19.UseVisualStyleBackColor = true;
@@ -3318,9 +3311,9 @@ namespace ReaLTaiizor.UI
             materialLabel82.Location = new Point(1595, 160);
             materialLabel82.MouseState = Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel82.Name = "materialLabel82";
-            materialLabel82.Size = new Size(116, 19);
+            materialLabel82.Size = new Size(65, 19);
             materialLabel82.TabIndex = 33;
-            materialLabel82.Text = "materialLabel82";
+            materialLabel82.Text = "移动距离";
             // 
             // materialButton60
             // 
@@ -3350,6 +3343,7 @@ namespace ReaLTaiizor.UI
             textBox_move.BackgroundImageLayout = ImageLayout.None;
             textBox_move.CharacterCasing = CharacterCasing.Normal;
             textBox_move.Depth = 0;
+            textBox_move.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 134);
             textBox_move.HideSelection = true;
             textBox_move.Location = new Point(1517, 207);
             textBox_move.MaxLength = 32767;
@@ -3381,6 +3375,7 @@ namespace ReaLTaiizor.UI
             hopePictureBox1.TabIndex = 0;
             hopePictureBox1.TabStop = false;
             hopePictureBox1.TextRenderingType = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            hopePictureBox1.Click += hopePictureBox1_Click;
             hopePictureBox1.MouseDown += hopePictureBox1_MouseDown;
             hopePictureBox1.MouseMove += hopePictureBox1_MouseMove;
             hopePictureBox1.MouseUp += hopePictureBox1_MouseUp;
@@ -3393,7 +3388,7 @@ namespace ReaLTaiizor.UI
             tabPage20.ImageKey = "round_swap_vert_white_24dp.png";
             tabPage20.Location = new Point(4, 33);
             tabPage20.Name = "tabPage20";
-            tabPage20.Size = new Size(2017, 1161);
+            tabPage20.Size = new Size(2017, 1415);
             tabPage20.TabIndex = 17;
             tabPage20.Text = "Rapid";
             tabPage20.UseVisualStyleBackColor = true;
@@ -3463,7 +3458,7 @@ namespace ReaLTaiizor.UI
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.White;
-            ClientSize = new Size(2037, 1322);
+            ClientSize = new Size(2037, 1576);
             ContextMenuStrip = materialContextMenuStrip1;
             Controls.Add(materialTabControl1);
             DrawerShowIconsWhenHidden = true;
@@ -3598,8 +3593,7 @@ namespace ReaLTaiizor.UI
         private MaterialLabel materialLabel78;
         private MaterialLabel materialLabel79;
         private MaterialButton materialButton49;
-        private MetroTextBox textBox_TP_ReadNum;
-        private MetroTextBox textBox_TpWrite;
+        private MetroTextBox textBox_TPWrite;
         private System.Windows.Forms.TabPage tabPage15;
         private System.Windows.Forms.TabPage tabPage16;
         private MaterialLabel materialLabel81;
@@ -3695,5 +3689,10 @@ namespace ReaLTaiizor.UI
         private ColumnHeader columnHeader26;
         private MaterialLabel materialLabel2;
         private MaterialMultiLineTextBoxEdit txtShowRdQ4;
+        private System.Windows.Forms.Button button13;
+        //private MaterialMultiLineTextBoxEdit textBox_TpWrite;
+        private MaterialMultiLineTextBoxEdit textBox_TP_ReadNum;
+        private Label TP_write;
+        // private MaterialMultiLineTextBoxEdit textBox_TPWrite;
     }
 }

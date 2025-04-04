@@ -73,6 +73,7 @@ namespace ReaLTaiizor.UI
         private ABB.Robotics.Controllers.RapidDomain.Task[] tasks = null;
         private NetworkWatcher networkwatcher = null;
 
+        private int ki = 0;
         private int Button1 = 0;
         private int Button2 = 0;
         private int Button3 = 0;
@@ -86,7 +87,8 @@ namespace ReaLTaiizor.UI
         private int Button11 = 0;
         private int Button12 = 0;
         private readonly MaterialSkinManager materialSkinManager;
-
+        private DateTime _lastInvokeTime = DateTime.MinValue;
+        private const int THROTTLE_INTERVAL_MS = 100; // 100毫秒间隔
         public Form17()
         {
             InitializeComponent();
@@ -378,29 +380,44 @@ namespace ReaLTaiizor.UI
             }
 
             Matrix<double> ja_conbi = ComputeJacobian(jointAngles);
-
-            if (ja_conbi.Determinant() <= 0.5)
+            double a = ja_conbi.Determinant();
+            if (ja_conbi.Determinant() <= 0.5E-18f + 1E-20f)
             {
-                cartesian.SetX(100);
-                cartesian.SetY(50);
-                cartesian.SetZ(200);
+                cartesian.SetX(364.68);
+                cartesian.SetY(0);
+                cartesian.SetZ(368.99);
             }
             else
             {
                 if (bCatch == true)
                 {
-                    cartesian.SetX((float)(robot_x_start) + 5 * (New_point.X - Down_point.X));
-                    cartesian.SetY((float)(robot_y_start) + 5 * (New_point.Y - Down_point.Y));
-                    cartesian.SetZ(200);
+                    cartesian.SetX((float)(robot_x_start) + 0.8 * (New_point.X - Down_point.X));
+                    cartesian.SetY((float)(robot_y_start) + 0.8 * (New_point.Y - Down_point.Y));
+                    cartesian.SetZ(368.99);
                 }
                 else
                 {
                     cartesian.SetX((float)robot_x_current)
                              .SetY((float)robot_y_current)
-                             .SetZ(200);
+                             .SetZ(368.99);
                 }
             }
-
+            //测试
+            //cartesian.SetX(342)
+            //.SetY(25)
+            //.SetZ(587.5);
+            //if (ki == 0)
+            //{
+            //    ki = 1;
+            //}
+            //else
+            //{
+            //    cartesian.SetX(342)
+            //    .SetY（25)
+            //   .SetZ(587.5);
+            //    ki = 0;
+            //}
+            //*****************************************************//
             orientation.SetU0(1.0)
            .SetU1(0.0)
             .SetU2(0.0)
@@ -648,56 +665,58 @@ namespace ReaLTaiizor.UI
 
         private void materialButton36_Click(object sender, EventArgs e)
         {
-            try
+            if (button13.Text.ToString() == "点按")
             {
-                using (Mastership.Request(controller.Rapid))
+                try
                 {
-                    if (radioButton_guanjie.Checked)
+                    using (Mastership.Request(controller.Rapid))
                     {
-
-
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join1");
-                        if ((float.Parse(textBox4.Text) + 5) < 165)
+                        if (radioButton_guanjie.Checked)
                         {
-                            if (rapidData.RapidType == "num")
+
+
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join1");
+                            if ((float.Parse(textBox4.Text) + 5) < 165)
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("1");
-                                rapidData.Value = rd;
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("1");
+                                    rapidData.Value = rd;
 
+                                }
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("关节角度超出范围");
-                        }
-
-                    }
-                    else if (radioButton_world.Checked)
-                    {
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "xl");
-                        if ((float.Parse(textBox4.Text) + 5) < 570)
-                        {
-                            if (rapidData.RapidType == "num")
+                            else
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("1");
-                                rapidData.Value = rd;
-
+                                MessageBox.Show("关节角度超出范围");
                             }
+
                         }
-                        else
+                        else if (radioButton_world.Checked)
                         {
-                            MessageBox.Show("关节角度超出范围");
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "xl");
+                            if ((float.Parse(textBox4.Text) + 5) < 570)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("1");
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("出现异常" + ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("出现异常" + ex.Message);
-            }
-
         }
 
         private void tabPage14_Click(object sender, EventArgs e)
@@ -1187,6 +1206,7 @@ namespace ReaLTaiizor.UI
 
         private void materialButton35_Click(object sender, EventArgs e)
         {
+
             try
             {
                 using (Mastership.Request(controller.Rapid))
@@ -1208,20 +1228,25 @@ namespace ReaLTaiizor.UI
                 MessageBox.Show(ex.Message.ToString());
             }
 
+
         }
 
         private void materialButton36_MouseDown(object sender, MouseEventArgs e)
         {
-            Button1 = 1;
-            timer_exercise.Start();
-
+            if (button13.Text.ToString() == "长按")
+            {
+                Button1 = 1;
+                timer_exercise.Start();
+            }
         }
 
         private void materialButton36_MouseUp(object sender, MouseEventArgs e)
         {
-            timer_exercise.Stop();
-            Send_Exercise_num_Add("join1", "xl", "0", "0", 155, 560);
-
+            if (button13.Text.ToString() == "长按")
+            {
+                timer_exercise.Stop();
+                Send_Exercise_num_Add("join1", "xl", "0", "0", 155, 560);
+            }
         }
 
         private void materialButton8_Click(object sender, EventArgs e)
@@ -1476,6 +1501,7 @@ namespace ReaLTaiizor.UI
             txtShowRd.Text = rapidData.Value.ToString();
         }
         UITPReadNumEventArgs numEventArgs;
+        UITPWriteEventArgs tpWriteEventArgs;
         void subscrbe_TpWrite()
         {
             controller.Rapid.UIInstruction.UIInstructionEvent += new UIInstructionEventHandler(Rapid_UIInstruction);
@@ -1487,15 +1513,20 @@ namespace ReaLTaiizor.UI
         private void Update_GUI_TpWrite(object sender, System.EventArgs e)
         {
             UIInstructionEventArgs ex = (UIInstructionEventArgs)e;
-            if (ex.InstructionType == UIInstructionType.TPWrite)
-            {
-                textBox_TpWrite.Text = ex.EventMessage.ToString();
-            }
-            else if (ex.InstructionType == UIInstructionType.TPReadNum)
+            //if (ex.InstructionType == UIInstructionType.TPWrite)
+            //{
+            //    TP_write.Text = ex.EventMessage.ToString();
+            //}
+            if (ex.InstructionType == UIInstructionType.TPReadNum)
             {
                 numEventArgs = (UITPReadNumEventArgs)e;
-                textBox_TpWrite.Text = numEventArgs.TPText.ToString();
+                TP_write.Text = numEventArgs.TPText.ToString();
 
+            }
+            else
+            {
+                tpWriteEventArgs = (UITPWriteEventArgs)e;
+                TP_write.Text = tpWriteEventArgs.TaskName.ToString();
             }
 
         }
@@ -1613,8 +1644,8 @@ namespace ReaLTaiizor.UI
                 {
                     ListViewItem item = new ListViewItem(signal.Name);
                     item.SubItems.Add(signal.Type.ToString());
-                    item.SubItems.Add(signal.Unit.ToString());
                     item.SubItems.Add(signal.Value.ToString());
+                    item.SubItems.Add(signal.Unit.ToString());
                     this.listView3.Items.Add(item);
                     item.Tag = signal;
                     signal.Changed += new EventHandler<SignalChangedEventArgs>(Signal_Changed);
@@ -1714,748 +1745,823 @@ namespace ReaLTaiizor.UI
 
         private void materialButton37_Click(object sender, EventArgs e)
         {
-            try
+            if (button13.Text.ToString() == "点按")
             {
-                using (Mastership.Request(controller.Rapid))
+
+                try
                 {
-                    if (radioButton_guanjie.Checked)
+                    using (Mastership.Request(controller.Rapid))
                     {
-
-
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join1");
-                        if ((float.Parse(textBox4.Text) - 5) > -160)
+                        if (radioButton_guanjie.Checked)
                         {
-                            if (rapidData.RapidType == "num")
-                            {
-                                Num rd = new Num();
-                                rd.FillFromString2("2");
-                                rapidData.Value = rd;
 
+
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join1");
+                            if ((float.Parse(textBox4.Text) - 5) > -160)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("2");
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
                             }
                         }
-                        else
+                        else if (radioButton_world.Checked)
                         {
-                            MessageBox.Show("关节角度超出范围");
-                        }
-                    }
-                    else if (radioButton_world.Checked)
-                    {
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "xl");
-                        if ((float.Parse(textBox4.Text) - 5) > -570)
-                        {
-                            if (rapidData.RapidType == "num")
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "xl");
+                            if ((float.Parse(textBox4.Text) - 5) > -570)
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("2");
-                                rapidData.Value = rd;
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("2");
+                                    rapidData.Value = rd;
 
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
                             }
                         }
-                        else
-                        {
-                            MessageBox.Show("关节角度超出范围");
-                        }
                     }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("出现异常" + ex.Message);
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("出现异常" + ex.Message);
-            }
-
         }
 
         private void materialButton37_MouseDown(object sender, MouseEventArgs e)
         {
-            Button7 = 1;
-            timer_exercise.Start();
-
+            if (button13.Text.ToString() == "长按")
+            {
+                Button7 = 1;
+                timer_exercise.Start();
+            }
         }
 
         private void materialButton37_MouseUp(object sender, MouseEventArgs e)
         {
-            timer_exercise.Stop();
-            Send_Exercise_num_Sub("join1", "xl", "  0", "0", -155, -560);
-
+            if (button13.Text.ToString() == "长按")
+            {
+                timer_exercise.Stop();
+                Send_Exercise_num_Sub("join1", "xl", "  0", "0", -155, -560);
+            }
         }
 
         private void materialButton39_Click(object sender, EventArgs e)
         {
-            try
+            if (button13.Text.ToString() == "点按")
             {
-                using (Mastership.Request(controller.Rapid))
+                try
                 {
-                    if (radioButton_guanjie.Checked)
+                    using (Mastership.Request(controller.Rapid))
                     {
-
-
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join2");
-                        if ((float.Parse(textBox5.Text) + 5) < 105)
+                        if (radioButton_guanjie.Checked)
                         {
-                            if (rapidData.RapidType == "num")
+
+
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join2");
+                            if ((float.Parse(textBox5.Text) + 5) < 105)
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("1");
-                                rapidData.Value = rd;
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("1");
+                                    rapidData.Value = rd;
 
+                                }
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("关节角度超出范围");
-                        }
-
-                    }
-                    else if (radioButton_world.Checked)
-                    {
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "yl");
-                        if ((float.Parse(textBox4.Text) + 5) < 570)
-                        {
-                            if (rapidData.RapidType == "num")
+                            else
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("1");
-                                rapidData.Value = rd;
-
+                                MessageBox.Show("关节角度超出范围");
                             }
+
                         }
-                        else
+                        else if (radioButton_world.Checked)
                         {
-                            MessageBox.Show("关节角度超出范围");
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "yl");
+                            if ((float.Parse(textBox4.Text) + 5) < 570)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("1");
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("出现异常" + ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("出现异常" + ex.Message);
-            }
-
         }
 
         private void materialButton39_MouseDown(object sender, MouseEventArgs e)
         {
-            Button2 = 1;
-            timer_exercise.Start();
+            if (button13.Text.ToString() == "长按")
+            {
+                Button2 = 1;
+                timer_exercise.Start();
+            }
 
         }
 
         private void materialButton39_MouseUp(object sender, MouseEventArgs e)
         {
-            timer_exercise.Stop();
-            Send_Exercise_num_Add("join2", "yl", "0", "0", 100, 560);
-
+            if (button13.Text.ToString() == "长按")
+            {
+                timer_exercise.Stop();
+                Send_Exercise_num_Add("join2", "yl", "0", "0", 100, 560);
+            }
         }
 
         private void materialButton38_Click(object sender, EventArgs e)
         {
-            try
+            if (button13.Text.ToString() == "点按")
             {
-                using (Mastership.Request(controller.Rapid))
+                try
                 {
-                    if (radioButton_guanjie.Checked)
+                    using (Mastership.Request(controller.Rapid))
                     {
-
-
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join2");
-                        if ((float.Parse(textBox5.Text) - 5) > -105)
+                        if (radioButton_guanjie.Checked)
                         {
-                            if (rapidData.RapidType == "num")
-                            {
-                                Num rd = new Num();
-                                rd.FillFromString2("2");
-                                rapidData.Value = rd;
 
+
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join2");
+                            if ((float.Parse(textBox5.Text) - 5) > -105)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("2");
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
                             }
                         }
-                        else
+                        else if (radioButton_world.Checked)
                         {
-                            MessageBox.Show("关节角度超出范围");
-                        }
-                    }
-                    else if (radioButton_world.Checked)
-                    {
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "yl");
-                        if ((float.Parse(textBox4.Text) - 5) > -570)
-                        {
-                            if (rapidData.RapidType == "num")
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "yl");
+                            if ((float.Parse(textBox4.Text) - 5) > -570)
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("2");
-                                rapidData.Value = rd;
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("2");
+                                    rapidData.Value = rd;
 
+                                }
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("关节角度超出范围");
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("出现异常" + ex.Message);
+                catch (Exception ex)
+                {
+                    MessageBox.Show("出现异常" + ex.Message);
+                }
             }
 
         }
 
         private void materialButton38_MouseDown(object sender, MouseEventArgs e)
         {
-            Button8 = 1;
-            timer_exercise.Start();
+            if (button13.Text.ToString() == "长按")
+            {
+                Button8 = 1;
+                timer_exercise.Start();
+            }
 
         }
 
         private void materialButton38_MouseUp(object sender, MouseEventArgs e)
         {
-            timer_exercise.Stop();
-            Send_Exercise_num_Sub("join2", "yl", "0", "0", -100, -560);
+            if (button13.Text.ToString() == "长按")
+            {
+                timer_exercise.Stop();
+                Send_Exercise_num_Sub("join2", "yl", "0", "0", -100, -560);
+            }
 
         }
 
         private void materialButton41_Click(object sender, EventArgs e)
         {
-            try
+            if (button13.Text.ToString() == "点按")
             {
-                using (Mastership.Request(controller.Rapid))
+                try
                 {
-                    if (radioButton_guanjie.Checked)
+                    using (Mastership.Request(controller.Rapid))
                     {
-
-
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join3");
-                        if ((float.Parse(textBox6.Text) + 5) < 65)
+                        if (radioButton_guanjie.Checked)
                         {
-                            if (rapidData.RapidType == "num")
+
+
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join3");
+                            if ((float.Parse(textBox6.Text) + 5) < 65)
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("1");
-                                rapidData.Value = rd;
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("1");
+                                    rapidData.Value = rd;
 
+                                }
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("关节角度超出范围");
-                        }
-
-                    }
-                    else if (radioButton_world.Checked)
-                    {
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "zl");
-                        if ((float.Parse(textBox4.Text) + 5) < 150)
-                        {
-                            if (rapidData.RapidType == "num")
+                            else
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("1");
-                                rapidData.Value = rd;
-
+                                MessageBox.Show("关节角度超出范围");
                             }
+
                         }
-                        else
+                        else if (radioButton_world.Checked)
                         {
-                            MessageBox.Show("关节角度超出范围");
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "zl");
+                            if ((float.Parse(textBox4.Text) + 5) < 150)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("1");
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("出现异常" + ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("出现异常" + ex.Message);
-            }
-
         }
 
         private void materialButton41_MouseDown(object sender, MouseEventArgs e)
         {
-            Button3 = 1;
-            timer_exercise.Start();
-
+            if (button13.Text.ToString() == "长按")
+            {
+                Button3 = 1;
+                timer_exercise.Start();
+            }
         }
 
         private void materialButton41_MouseUp(object sender, MouseEventArgs e)
         {
-            timer_exercise.Stop();
-            Send_Exercise_num_Add("join3", "zl", "0", "0", 60, 120);
-
+            if (button13.Text.ToString() == "长按")
+            {
+                timer_exercise.Stop();
+                Send_Exercise_num_Add("join3", "zl", "0", "0", 60, 120);
+            }
         }
 
         private void materialButton40_Click(object sender, EventArgs e)
         {
-            try
+            if (button13.Text.ToString() == "点按")
             {
-                using (Mastership.Request(controller.Rapid))
+                try
                 {
-                    if (radioButton_guanjie.Checked)
+                    using (Mastership.Request(controller.Rapid))
                     {
-
-
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join3");
-                        if ((float.Parse(textBox6.Text) - 5) > -85)
+                        if (radioButton_guanjie.Checked)
                         {
-                            if (rapidData.RapidType == "num")
-                            {
-                                Num rd = new Num();
-                                rd.FillFromString2("2");
-                                rapidData.Value = rd;
 
+
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join3");
+                            if ((float.Parse(textBox6.Text) - 5) > -85)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("2");
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
                             }
                         }
-                        else
+                        else if (radioButton_world.Checked)
                         {
-                            MessageBox.Show("关节角度超出范围");
-                        }
-                    }
-                    else if (radioButton_world.Checked)
-                    {
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "zl");
-                        if ((float.Parse(textBox4.Text) - 5) > -105)
-                        {
-                            if (rapidData.RapidType == "num")
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "zl");
+                            if ((float.Parse(textBox4.Text) - 5) > -105)
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("2");
-                                rapidData.Value = rd;
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("2");
+                                    rapidData.Value = rd;
 
+                                }
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("关节角度超出范围");
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("出现异常" + ex.Message);
+                catch (Exception ex)
+                {
+                    MessageBox.Show("出现异常" + ex.Message);
+                }
             }
 
         }
 
         private void materialButton40_MouseDown(object sender, MouseEventArgs e)
         {
-            Button9 = 1;
-            timer_exercise.Start();
-
+            if (button13.Text.ToString() == "长按")
+            {
+                Button9 = 1;
+                timer_exercise.Start();
+            }
         }
 
         private void materialButton40_MouseUp(object sender, MouseEventArgs e)
         {
-            timer_exercise.Stop();
-            Send_Exercise_num_Sub("join3", "zl", "0", "0", -80, -105);
-
+            if (button13.Text.ToString() == "长按")
+            {
+                timer_exercise.Stop();
+                Send_Exercise_num_Sub("join3", "zl", "0", "0", -80, -105);
+            }
         }
 
         private void materialButton43_Click(object sender, EventArgs e)
         {
-            try
+            if (button13.Text.ToString() == "点按")
             {
-                using (Mastership.Request(controller.Rapid))
+                try
                 {
-                    if (radioButton_guanjie.Checked)
+                    using (Mastership.Request(controller.Rapid))
                     {
-
-
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join4");
-                        if ((float.Parse(textBox7.Text) + 5) < 165)
+                        if (radioButton_guanjie.Checked)
                         {
-                            if (rapidData.RapidType == "num")
+
+
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join4");
+                            if ((float.Parse(textBox7.Text) + 5) < 165)
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("1");
-                                rapidData.Value = rd;
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("1");
+                                    rapidData.Value = rd;
 
+                                }
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("关节角度超出范围");
-                        }
-
-                    }
-                    else if (radioButton_world.Checked)
-                    {
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "rxl");
-                        if ((float.Parse(textBox4.Text) + 5) < 175)
-                        {
-                            if (rapidData.RapidType == "num")
+                            else
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("1");
-                                rapidData.Value = rd;
-
+                                MessageBox.Show("关节角度超出范围");
                             }
+
                         }
-                        else
+                        else if (radioButton_world.Checked)
                         {
-                            MessageBox.Show("关节角度超出范围");
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "rxl");
+                            if ((float.Parse(textBox4.Text) + 5) < 175)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("1");
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("出现异常" + ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("出现异常" + ex.Message);
-            }
-
         }
 
         private void materialButton43_MouseDown(object sender, MouseEventArgs e)
         {
-            Button4 = 1;
-            timer_exercise.Start();
-
+            if (button13.Text.ToString() == "长按")
+            {
+                Button4 = 1;
+                timer_exercise.Start();
+            }
         }
 
         private void materialButton43_MouseUp(object sender, MouseEventArgs e)
         {
-            timer_exercise.Stop();
-            Send_Exercise_num_Add("join4", "rxl", "0", "0", 150, 170);
-
+            if (button13.Text.ToString() == "长按")
+            {
+                timer_exercise.Stop();
+                Send_Exercise_num_Add("join4", "rxl", "0", "0", 150, 170);
+            }
         }
 
         private void materialButton42_Click(object sender, EventArgs e)
         {
-            try
+            if (button13.Text.ToString() == "点按")
             {
-                using (Mastership.Request(controller.Rapid))
+                try
                 {
-                    if (radioButton_guanjie.Checked)
+                    using (Mastership.Request(controller.Rapid))
                     {
-
-
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join4");
-                        if ((float.Parse(textBox7.Text) - 5) > -155)
+                        if (radioButton_guanjie.Checked)
                         {
-                            if (rapidData.RapidType == "num")
-                            {
-                                Num rd = new Num();
-                                rd.FillFromString2("2");
-                                rapidData.Value = rd;
 
+
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join4");
+                            if ((float.Parse(textBox7.Text) - 5) > -155)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("2");
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
                             }
                         }
-                        else
+                        else if (radioButton_world.Checked)
                         {
-                            MessageBox.Show("关节角度超出范围");
-                        }
-                    }
-                    else if (radioButton_world.Checked)
-                    {
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "rxl");
-                        if ((float.Parse(textBox4.Text) - 5) > -175)
-                        {
-                            if (rapidData.RapidType == "num")
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "rxl");
+                            if ((float.Parse(textBox4.Text) - 5) > -175)
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("2");
-                                rapidData.Value = rd;
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("2");
+                                    rapidData.Value = rd;
 
+                                }
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("关节角度超出范围");
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("出现异常" + ex.Message);
+                catch (Exception ex)
+                {
+                    MessageBox.Show("出现异常" + ex.Message);
+                }
             }
 
         }
 
         private void materialButton42_MouseDown(object sender, MouseEventArgs e)
         {
-            Button10 = 1;
-            timer_exercise.Start();
-
+            if (button13.Text.ToString() == "长按")
+            {
+                Button10 = 1;
+                timer_exercise.Start();
+            }
         }
 
         private void materialButton42_MouseUp(object sender, MouseEventArgs e)
         {
-            timer_exercise.Stop();
-            Send_Exercise_num_Sub("join4", "rxl", "0", "0", -150, -170);
-
+            if (button13.Text.ToString() == "长按")
+            {
+                timer_exercise.Stop();
+                Send_Exercise_num_Sub("join4", "rxl", "0", "0", -150, -170);
+            }
         }
 
         private void materialButton45_Click(object sender, EventArgs e)
         {
-
-            try
+            if (button13.Text.ToString() == "点按")
             {
-                using (Mastership.Request(controller.Rapid))
+
+                try
                 {
-                    if (radioButton_guanjie.Checked)
+                    using (Mastership.Request(controller.Rapid))
                     {
-
-
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join5");
-                        if ((float.Parse(textBox8.Text) + 5) < 110)
+                        if (radioButton_guanjie.Checked)
                         {
-                            if (rapidData.RapidType == "num")
+
+
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join5");
+                            if ((float.Parse(textBox8.Text) + 5) < 110)
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("1");
-                                rapidData.Value = rd;
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("1");
+                                    rapidData.Value = rd;
 
+                                }
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("关节角度超出范围");
-                        }
-
-                    }
-                    else if (radioButton_world.Checked)
-                    {
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "ryl");
-                        if ((float.Parse(textBox4.Text) + 5) < 175)
-                        {
-                            if (rapidData.RapidType == "num")
+                            else
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("1");
-                                rapidData.Value = rd;
-
+                                MessageBox.Show("关节角度超出范围");
                             }
+
                         }
-                        else
+                        else if (radioButton_world.Checked)
                         {
-                            MessageBox.Show("关节角度超出范围");
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "ryl");
+                            if ((float.Parse(textBox4.Text) + 5) < 175)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("1");
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("出现异常" + ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("出现异常" + ex.Message);
-            }
-
         }
 
         private void materialButton45_MouseDown(object sender, MouseEventArgs e)
         {
-            Button5 = 1;
-            timer_exercise.Start();
-
+            if (button13.Text.ToString() == "长按")
+            {
+                Button5 = 1;
+                timer_exercise.Start();
+            }
         }
 
         private void materialButton45_MouseUp(object sender, MouseEventArgs e)
         {
-            timer_exercise.Stop();
-            Send_Exercise_num_Add("join5", "ryl", "0", "0", 110, 170);
-
+            if (button13.Text.ToString() == "长按")
+            {
+                timer_exercise.Stop();
+                Send_Exercise_num_Add("join5", "ryl", "0", "0", 110, 170);
+            }
         }
 
         private void materialButton44_Click(object sender, EventArgs e)
         {
-            try
+            if (button13.Text.ToString() == "点按")
             {
-                using (Mastership.Request(controller.Rapid))
+                try
                 {
-                    if (radioButton_guanjie.Checked)
+                    using (Mastership.Request(controller.Rapid))
                     {
-
-
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join5");
-                        if ((float.Parse(textBox8.Text) - 5) > -110)
+                        if (radioButton_guanjie.Checked)
                         {
-                            if (rapidData.RapidType == "num")
-                            {
-                                Num rd = new Num();
-                                rd.FillFromString2("2");
-                                rapidData.Value = rd;
 
+
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join5");
+                            if ((float.Parse(textBox8.Text) - 5) > -110)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("2");
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
                             }
                         }
-                        else
+                        else if (radioButton_world.Checked)
                         {
-                            MessageBox.Show("关节角度超出范围");
-                        }
-                    }
-                    else if (radioButton_world.Checked)
-                    {
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "ryl");
-                        if ((float.Parse(textBox4.Text) - 5) > -175)
-                        {
-                            if (rapidData.RapidType == "num")
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "ryl");
+                            if ((float.Parse(textBox4.Text) - 5) > -175)
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("2");
-                                rapidData.Value = rd;
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("2");
+                                    rapidData.Value = rd;
 
+                                }
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("关节角度超出范围");
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("出现异常" + ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("出现异常" + ex.Message);
-            }
-
         }
-
         private void materialButton44_MouseDown(object sender, MouseEventArgs e)
         {
-            Button11 = 1;
-            timer_exercise.Start();
-
+            if (button13.Text.ToString() == "长按")
+            {
+                Button11 = 1;
+                timer_exercise.Start();
+            }
         }
 
         private void materialButton47_Click(object sender, EventArgs e)
         {
-            try
+            if (button13.Text.ToString() == "点按")
             {
-                using (Mastership.Request(controller.Rapid))
+                try
                 {
-                    if (radioButton_guanjie.Checked)
+                    using (Mastership.Request(controller.Rapid))
                     {
-
-
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join6");
-                        if ((float.Parse(textBox9.Text) + 5) < 380)
+                        if (radioButton_guanjie.Checked)
                         {
-                            if (rapidData.RapidType == "num")
-                            {
-                                Num rd = new Num();
-                                rd.FillFromString2("1");
-                                rapidData.Value = rd;
 
+
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join6");
+                            if ((float.Parse(textBox9.Text) + 5) < 380)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("1");
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
                             }
                         }
-                        else
+                        else if (radioButton_world.Checked)
                         {
-                            MessageBox.Show("关节角度超出范围");
-                        }
-                    }
-                    else if (radioButton_world.Checked)
-                    {
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "rzl");
-                        if ((float.Parse(textBox4.Text) + 5) < 175)
-                        {
-                            if (rapidData.RapidType == "num")
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "rzl");
+                            if ((float.Parse(textBox4.Text) + 5) < 175)
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("1");
-                                rapidData.Value = rd;
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("1");
+                                    rapidData.Value = rd;
 
+                                }
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("关节角度超出范围");
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("出现异常" + ex.Message);
+                catch (Exception ex)
+                {
+                    MessageBox.Show("出现异常" + ex.Message);
+                }
             }
 
         }
 
         private void materialButton47_MouseDown(object sender, MouseEventArgs e)
         {
-            Button6 = 1;
-            timer_exercise.Start();
-
+            if (button13.Text.ToString() == "长按")
+            {
+                Button6 = 1;
+                timer_exercise.Start();
+            }
         }
 
         private void materialButton47_MouseUp(object sender, MouseEventArgs e)
         {
-            timer_exercise.Stop();
-            Send_Exercise_num_Add("join6", "rzl", "0", "0", 390, 170);
-
+            if (button13.Text.ToString() == "长按")
+            {
+                timer_exercise.Stop();
+                Send_Exercise_num_Add("join6", "rzl", "0", "0", 390, 170);
+            }
         }
 
         private void materialButton44_MouseUp(object sender, MouseEventArgs e)
         {
-            timer_exercise.Stop();
-            Send_Exercise_num_Sub("join5", "ryl", "0", "0", -110, -170);
-
+            if (button13.Text.ToString() == "长按")
+            {
+                timer_exercise.Stop();
+                Send_Exercise_num_Sub("join5", "ryl", "0", "0", -110, -170);
+            }
         }
 
         private void materialButton46_Click(object sender, EventArgs e)
         {
-            try
+            if (button13.Text.ToString() == "点按")
             {
-                using (Mastership.Request(controller.Rapid))
+                try
                 {
-                    if (radioButton_guanjie.Checked)
+                    using (Mastership.Request(controller.Rapid))
                     {
-
-
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join6");
-                        if ((float.Parse(textBox9.Text) - 5) > -380)
+                        if (radioButton_guanjie.Checked)
                         {
-                            if (rapidData.RapidType == "num")
-                            {
-                                Num rd = new Num();
-                                rd.FillFromString2("2");
-                                rapidData.Value = rd;
 
+
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "join6");
+                            if ((float.Parse(textBox9.Text) - 5) > -380)
+                            {
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("2");
+                                    rapidData.Value = rd;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
                             }
                         }
-                        else
+                        else if (radioButton_world.Checked)
                         {
-                            MessageBox.Show("关节角度超出范围");
-                        }
-                    }
-                    else if (radioButton_world.Checked)
-                    {
-                        RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "rzl");
-                        if ((float.Parse(textBox4.Text) - 5) > -175)
-                        {
-                            if (rapidData.RapidType == "num")
+                            RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "rzl");
+                            if ((float.Parse(textBox4.Text) - 5) > -175)
                             {
-                                Num rd = new Num();
-                                rd.FillFromString2("2");
-                                rapidData.Value = rd;
+                                if (rapidData.RapidType == "num")
+                                {
+                                    Num rd = new Num();
+                                    rd.FillFromString2("2");
+                                    rapidData.Value = rd;
 
+                                }
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("关节角度超出范围");
+                            else
+                            {
+                                MessageBox.Show("关节角度超出范围");
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("出现异常" + ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("出现异常" + ex.Message);
-            }
-
         }
 
         private void materialButton46_MouseDown(object sender, MouseEventArgs e)
         {
-            Button12 = 1;
-            timer_exercise.Start();
-
+            if (button13.Text.ToString() == "长按")
+            {
+                Button12 = 1;
+                timer_exercise.Start();
+            }
         }
 
         private void materialButton46_MouseUp(object sender, MouseEventArgs e)
         {
-            timer_exercise.Stop();
-            Send_Exercise_num_Sub("join6", "rzl", "0", "0", -390, -170);
-
+            if (button13.Text.ToString() == "长按")
+            {
+                timer_exercise.Stop();
+                Send_Exercise_num_Sub("join6", "rzl", "0", "0", -390, -170);
+            }
         }
 
         private void materialButton48_Click(object sender, EventArgs e)
         {
+
             try
             {
                 using (Mastership m = Mastership.Request(controller.Rapid))
@@ -2510,8 +2616,12 @@ namespace ReaLTaiizor.UI
                 RapidData rapidData = tasks[0].GetRapidData(symbol);
                 ListViewItem item = new ListViewItem(rapidData.Name.ToString());
                 item.SubItems.Add(symbol.Type.ToString());
+
                 item.SubItems.Add(rapidData.RapidType.ToString());
+                if (rapidData.Value != null)
+                { 
                 item.SubItems.Add(rapidData.Value.ToString());
+                  }
                 this.listView4.Items.Add(item);
                 item.Tag = symbol;
             }
@@ -2676,7 +2786,8 @@ namespace ReaLTaiizor.UI
                 string RemoteDir = controller.FileSystem.RemoteDirectory + comboBox_pgf.SelectedItem.ToString();
                 using (Mastership m = Mastership.Request(controller.Rapid))
                 {
-                    bool flag1 = tasks[0].LoadModuleFromFile(RemoteDir, RapidLoadMode.Replace);
+                    tasks = controller.Rapid.GetTasks();
+                    bool flag1 = tasks[0].LoadProgramFromFile(RemoteDir, RapidLoadMode.Replace);
                     if (flag1)
                     {
                         MessageBox.Show("加载成功");
@@ -2702,8 +2813,10 @@ namespace ReaLTaiizor.UI
                 }
                 try
                 {
+                    tasks = controller.Rapid.GetTasks();
                     if (controller.FileSystem.FileExists(@"/" + strFileName))
                     {
+                        
                         controller.FileSystem.PutFile(strFileFullPath, "\\" + strFileName, true);
 
                     }
@@ -2716,8 +2829,8 @@ namespace ReaLTaiizor.UI
                     string RemoteDir = controller.FileSystem.RemoteDirectory + @"/" + strFileName;
                     using (Mastership m = Mastership.Request(controller.Rapid))
                     {
-                        tasks = controller.Rapid.GetTasks();
-                        tasks[0].LoadModuleFromFile(RemoteDir, RapidLoadMode.Replace);
+                        
+                        tasks[0].LoadProgramFromFile(RemoteDir, RapidLoadMode.Replace);
 
 
                         MessageBox.Show("加载成功");
@@ -2831,6 +2944,7 @@ namespace ReaLTaiizor.UI
                 remoteEP = new IPEndPoint(IPAddress.Any, egmServerPort);
                 var data = _udpServer.Receive(ref remoteEP);
                 robot = EgmRobot.CreateBuilder().MergeFrom(data).Build();
+                MessageBox.Show("连接到 EGM 服务器成功");
             }
             catch (Exception ex)
             {
@@ -2845,42 +2959,46 @@ namespace ReaLTaiizor.UI
 
         private void hopePictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            //    Down_point = new Point(e.X, e.Y);//记录鼠标按下的点
-            //    Last_point = new Point(e.X, e.Y);//记录鼠标按下的点
-            //    bCatch = true;
-            //    bGet = true;
+            Down_point = new Point(e.X, e.Y);//记录鼠标按下的点
+            Last_point = new Point(e.X, e.Y);//记录鼠标按下的点
+            bCatch = true;
+            bGet = true;
 
         }
 
         private void hopePictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            //    Graphics g1 = hopePictureBox1.CreateGraphics();//创建画板
-            //    if (bCatch == true)
-            //    {
-            //        this.Invoke(new Action(() =>
-            //        {
-            //            New_point = new Point(e.X, e.Y);//记录鼠标移动的新点
-            //            Pen pen = new Pen(Color.Red, 2);//画笔
-            //            g1.DrawLine(pen, Last_point, New_point);//画线
-            //            Last_point = New_point;//将新点赋值给上一个点
-            //            textBox_move.Text = "X:" + (0.1 * (New_point.X - Down_point.X)).ToString() + "Y:" + (0.1 * (New_point.Y - Down_point.Y)).ToString();//显示移动的距离
-            //        }));
+            Graphics g1 = hopePictureBox1.CreateGraphics();//创建画板
+            if (bCatch == true)
+            {
+                this.Invoke(new System.Action(() =>
+                {
+                    New_point = new Point(e.X, e.Y);//记录鼠标移动的新点
+                    Pen pen = new Pen(Color.Red, 2);//画笔
+                    g1.DrawLine(pen, Last_point, New_point);//画线
+                    Last_point = New_point;//将新点赋值给上一个点
+                    textBox_move.Text = "X:" + (0.8 * (New_point.X - Down_point.X)).ToString() + "Y:" + (0.8 * (New_point.Y - Down_point.Y)).ToString();//显示移动的距离
+                }));
 
-            //        //Create_Sensor_Message();
-            //        System.Threading.Tasks.Task.Run(() =>
-            //        {
-            //            Display_inbouse_Message(robot);
-            //            Create_Sensor_Message();
-            //        });
-            //    }
+                //Create_Sensor_Message();
+                if ((DateTime.Now - _lastInvokeTime).TotalMilliseconds >= THROTTLE_INTERVAL_MS)
+                {
+                    _lastInvokeTime = DateTime.Now;
+                    System.Threading.Tasks.Task.Run(() =>
+                {
+                    Display_inbouse_Message(robot);
+                    Create_Sensor_Message();
+                });
+                }
+            }
 
         }
 
         private void hopePictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            //    bCatch = false;
-            //    Graphics g1 = hopePictureBox1.CreateGraphics();
-            //    g1.Clear(Color.White);
+            bCatch = false;
+            Graphics g1 = hopePictureBox1.CreateGraphics();
+            g1.Clear(Color.White);
 
         }
 
@@ -2949,6 +3067,30 @@ namespace ReaLTaiizor.UI
         }
 
         private void materialCard5_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void hopePictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            if (button13.Text.ToString() == "点按")
+            {
+                button13.Text = "长按";
+                button13.BackColor = Color.RoyalBlue;
+            }
+            else
+            {
+                button13.Text = "点按";
+                button13.BackColor = Color.SteelBlue;
+            }
+        }
+
+        private void TP_write_Click(object sender, EventArgs e)
         {
 
         }
