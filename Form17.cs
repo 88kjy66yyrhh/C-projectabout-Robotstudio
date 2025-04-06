@@ -1340,22 +1340,22 @@ namespace ReaLTaiizor.UI
             }
             else if (Button3 == 1)
             {
-                Send_Exercise_num_Add("join3", "zl", "3", "3", 60, 120);
+                Send_Exercise_num_Add("join3", "zl", "3", "3", 60, 732);
                 Button3 = 0;
             }
             else if (Button4 == 1)
             {
-                Send_Exercise_num_Add("join4", "rxl", "3", "3", 150, 170);
+                Send_Exercise_num_Add("join4", "rxl", "3", "3", 150, 200);
                 Button4 = 0;
             }
             else if (Button5 == 1)
             {
-                Send_Exercise_num_Add("join5", "ryl", "3", "3", 110, 170);
+                Send_Exercise_num_Add("join5", "ryl", "3", "3", 110, 200);
                 Button5 = 0;
             }
             else if (Button6 == 1)
             {
-                Send_Exercise_num_Add("join6", "rzl", "3", "3", 390, 170);
+                Send_Exercise_num_Add("join6", "rzl", "3", "3", 390, 200);
                 Button6 = 0;
             }
             else if (Button7 == 1)
@@ -1375,17 +1375,17 @@ namespace ReaLTaiizor.UI
             }
             else if (Button10 == 1)
             {
-                Send_Exercise_num_Sub("join4", "rxl", "4", "4", -150, -170);
+                Send_Exercise_num_Sub("join4", "rxl", "4", "4", -150, -200);
                 Button10 = 0;
             }
             else if (Button11 == 1)
             {
-                Send_Exercise_num_Sub("join5", "ryl", "4", "4", -110, -170);
+                Send_Exercise_num_Sub("join5", "ryl", "4", "4", -110, -200);
                 Button11 = 0;
             }
             else if (Button12 == 1)
             {
-                Send_Exercise_num_Sub("join6", "rzl", "4", "4", -390, -170);
+                Send_Exercise_num_Sub("join6", "rzl", "4", "4", -390, -200);
                 Button12 = 0;
             }
         }
@@ -1602,7 +1602,7 @@ namespace ReaLTaiizor.UI
                         }
                         else
                         {
-                            if ((float.Parse(textBox4.Text) + 5) > lin2)
+                            if ((float.Parse(textBox8.Text) + 5) > lin2)
                             {
                                 if (rapidData.RapidType == "num")
                                 {
@@ -1712,7 +1712,7 @@ namespace ReaLTaiizor.UI
                         }
                         else
                         {
-                            if ((float.Parse(textBox4.Text) + 1) < lin2)
+                            if ((float.Parse(textBox8.Text) + 1) < lin2)
                             {
                                 if (rapidData.RapidType == "num")
                                 {
@@ -2001,7 +2001,7 @@ namespace ReaLTaiizor.UI
                         else if (radioButton_world.Checked)
                         {
                             RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "zl");
-                            if ((float.Parse(textBox4.Text) + 5) < 150)
+                            if ((float.Parse(textBox6.Text) + 5) < 732)
                             {
                                 if (rapidData.RapidType == "num")
                                 {
@@ -2074,7 +2074,7 @@ namespace ReaLTaiizor.UI
                         else if (radioButton_world.Checked)
                         {
                             RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "zl");
-                            if ((float.Parse(textBox4.Text) - 5) > -105)
+                            if ((float.Parse(textBox6.Text) - 5) > -105)
                             {
                                 if (rapidData.RapidType == "num")
                                 {
@@ -2149,7 +2149,7 @@ namespace ReaLTaiizor.UI
                         else if (radioButton_world.Checked)
                         {
                             RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "rxl");
-                            if ((float.Parse(textBox4.Text) + 5) < 175)
+                            if ((float.Parse(textBox7.Text) + 5) < 200)
                             {
                                 if (rapidData.RapidType == "num")
                                 {
@@ -2222,7 +2222,7 @@ namespace ReaLTaiizor.UI
                         else if (radioButton_world.Checked)
                         {
                             RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "rxl");
-                            if ((float.Parse(textBox4.Text) - 5) > -175)
+                            if ((float.Parse(textBox7.Text) - 5) > -175)
                             {
                                 if (rapidData.RapidType == "num")
                                 {
@@ -2298,7 +2298,7 @@ namespace ReaLTaiizor.UI
                         else if (radioButton_world.Checked)
                         {
                             RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "ryl");
-                            if ((float.Parse(textBox4.Text) + 5) < 175)
+                            if ((float.Parse(textBox8.Text) + 5) < 200)
                             {
                                 if (rapidData.RapidType == "num")
                                 {
@@ -2371,7 +2371,7 @@ namespace ReaLTaiizor.UI
                         else if (radioButton_world.Checked)
                         {
                             RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "ryl");
-                            if ((float.Parse(textBox4.Text) - 5) > -175)
+                            if ((float.Parse(textBox8.Text) - 5) > -175)
                             {
                                 if (rapidData.RapidType == "num")
                                 {
@@ -2434,7 +2434,7 @@ namespace ReaLTaiizor.UI
                         else if (radioButton_world.Checked)
                         {
                             RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "rzl");
-                            if ((float.Parse(textBox4.Text) + 5) < 175)
+                            if ((float.Parse(textBox9.Text) + 5) < 300)
                             {
                                 if (rapidData.RapidType == "num")
                                 {
@@ -2517,7 +2517,7 @@ namespace ReaLTaiizor.UI
                         else if (radioButton_world.Checked)
                         {
                             RapidData rapidData = controller.Rapid.GetRapidData("T_ROB1", "Modle2", "rzl");
-                            if ((float.Parse(textBox4.Text) - 5) > -175)
+                            if ((float.Parse(textBox9.Text) - 5) > -175)
                             {
                                 if (rapidData.RapidType == "num")
                                 {
