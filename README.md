@@ -6,9 +6,7 @@
 
 ## 1. 确保所连接的实际机器人系统或者虚拟机器人系统具有616-1 PC Interface 选项和 689-1 Externally Guided Motion(EGM)选项
 
-在 **Visual Studio** 中打开以下解决方案文件：
 
-- `WinFormsControlLibrary2.sln`
 
 ---
 
